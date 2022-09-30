@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="transform.xsl"?>
+<versions>
+	<pagetitle>LabSim Changelog</pagetitle>
+	<version name="See please">
+		<item><value>+ https://aeonic.ebp11.repl.co/labsim/changelog.xml</value></item>
+	</versions>
+<!--	<version name="1.6.1">
+		<item><value>~ Add discontinuation warning</value></item>
+		<item><value>NOTE: We may just replace this with a LabSim 2.0</item></value>
+	</version>
+	<version name="1.6">
+		<item><value>~ Change name to LabSim</value></item>
+		<item><value>+ Particle Physics</value></item>
+		<item><value>+ More metals</value></item>
+		<item><value>+ More gases</value></item>
+		<item><value>+ Deuterium, Tritium, Tetrahydrogen</value></item>
+		<item><value>+ Element ores</value></item>
+		<item><value>+ Netherite (alloy of platinum and gold)</value></item>
+		<item><value>+ Strange Matter</value></item>
+		<item><value>+ New weapons</value></item>
+		<item><value>+ New star types</value></item>
+		<item><value>+ Customise colour of light</value></item>
+		<item><value>+ Powder forms of frozen gases</value></item>
+		<item><value>~ Change solids from WALL to STURDYPOWDER</value></item>
+		<item><value>+ Cactus</value></item>
+		<item><value>+ Slowheater, slowcooler</value></item>
+		<item><value>+ Superheater, supercooler</value></item>
+		<item><value>+ Hyperheater, hypercooler</value></item>
+		<item><value>+ Refrigerator, freezer, microwave</value></item>
+		<item><value>+ Pee</value></item>
+		<item><value>+ Toilet and Urinal</value></item>
+		<item><value>+ Colour elements</value></item>
+	</version>
+	<version name="1.5">
+		<item><value>~ Fix bugs with antimatter</value></item>
+		<item><value>+ Merge Ketchup mod with base game</value></item>
+		<item><value>+ Add back art</value></item>
+		<item><value>+ Frozen dirt</value></item>
+		<item><value>+ Graupel</value></item>
+		<item><value>+ Metal Gasses</value></item>
+		<item><value>+ Mercury Cycle</value></item>
+		<item><value>+ Smash added to toolbar</value></item>
+		<item><value>+ Solid forms of gases</value></item>
+		<item><value>+ Ultraheater, ultracooler</value></item>
+		<item><value>+ Antisupernatural</value></item>
+		<item><value>+ Poop</value></item>
+	</version>
+	<version name="1.4">
+		<item><value>+ Mercury</value></item>
+		<item><value>+ Bromine</value></item>
+		<item><value>+ Oxozone</value></item>
+		<item><value>+ Human meat</value></item>
+		<item><value>+ Alcohols</value></item>
+		<item><value>- Antisupernatural</value></item>
+		<item><value>+ Portals</value></item>
+		<item><value>- Art</value></item>
+	</version>
+	<version name="1.3">
+		<item><value>+ Antisupernatural</value></item>
+		<item><value>+ Elements from fandomium.fandom.com</value></item>
+	</version>
+	<version name="1.2">
+		<item><value>+ Lavagas</value></item>
+		<item><value>~ Antimeat updates</value></item>
+	</version>
+	<version name="1.1.1">
+		<item><value>+ Antimatter</value></item>
+		<item><value>+ Antimeat</value></item>
+	</version>
+	<version name="1.1">
+		<item><value>+ Supernatural</value></item>
+	</version>
+	<version name="1.0">
+		<item><value>The original Proboxels, based off of Sandboxels.</value></item>
+	</version>
+	
+</versions>-->

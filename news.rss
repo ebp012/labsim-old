@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+		<title>LabSim Official RSS Feed</title>
+		<link>https://labsim.ebp11.repl.co</link>
+		<description>This is where you'll find tons of news concerning LabSim, the virtual chemistry sandbox.</description>
+		<item>
+			<title>LabSim 2.0.2 released</title>
+			<link>https://labsim.ebp11.repl.co</link>
+			<description>After the redesign and sidebar in LabSim 2.0, we've <i>finally</i> added another feature: tabbing and windowing support. The window switcher is available for free as a sidebar gadget, and does not require installation due to it being auto-installed for you. For those who wish not to use such gadget, it may be removed by pressing the gears to get to Personalisation, and then hiding the gadget "Window Switcher". Although still in progress, at this time you may access the default sandbox as well as the freshly updated Demonstrations page. The Aeonic Corporation hopes you enjoy this new feature.</description>
+			<pubDate>24 September 2022</pubDate>
+		</item>
+		<item>
+			<title>LabSim may be discontinued</title>
+			<link>https://labsim.ebp11.repl.co/v/1.6.1/</link>
+			<description>LabSim 1.6.1 has added a new announcement to the top stating how it may be discontinued or replaced. If the executives at Aeonic vote to make version 2.0, then we'll continue development with a new version.</description>
+			<pubDate>15 September 2022</pubDate>
+		</item>
+	</channel>
+</rss>

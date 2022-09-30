@@ -1,0 +1,10 @@
+Ocean vs. Saltwater saltiness tests
+Results:
+Test 1: Ocean is around 1.3x saltier than saltwater
+Test 2: Ocean is around 1.2x saltier than saltwater
+Test 3: Ocean is around 6x saltier than saltwater
+Code: Ocean is around 1.3x saltier than saltwater
+Conclusion (avg without outlier): Ocean is around 1.25x - 1.3x saltier than saltwater
+Conclusion (avg with outlier): Ocean is around 2.45x saltier than saltwater
+Visible Evidence: Ocean is obviously saltier than saltwater.
+ref. images/visible-evidence.png
