@@ -76,23 +76,27 @@
     <meta name="twitter:image" content="texturecarpet.png">
     <meta name="twitter:image:alt" content="All of the popular elements put together into one image.">
     <meta name="twitter:creator:id" content="1436857621827530753">
-
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!-- Schema -->
     <script type="application/ld+json">
         {
           "@context": "https://schema.org",
-          "@type": ["VideoGame","MobileApplication","WebApplication"],
+          "@type": ["VideoGame","MobileApplication","WebApplication","Education"],
           "gamePlatform":"Web Browser",
-          "image":"https://sandboxels.r74n.com/icons/icon.png",
-          "url": "https://sandboxels.r74n.com",
-          "name":"Sandboxels",
-          "author":"R74n",
-          "creator":"R74n",
-          "description":"Sandboxels is an in-browser falling sand simulation game, with mechanics such as heat simulation, electricity, density, chemical reactions, fire, and over 200 unique elements to play with.",
+          "image":"https://labsim.ebp11.repl.co/images/icon.png",
+          "url": "https://labsim.ebp11.repl.co/",
+          "name":"LabSim",
+          "author":"ebp11",
+          "creator":"ebp11",
+          "description":"Conduct experiments and play with dangerous elements. All without risking your life or getting a laboratory.",
           "offers":{
             "@type":"Offer",
             "price":"0",
-            "priceCurrency":"USD",
+            "priceCurrency":"INR",
             "availability":"https://schema.org/InStock"
           },
           "genre": "Falling-sand game",
@@ -101,9 +105,9 @@
           "dateCreated":"2021-12-15",
           "gameTip":"https://sandboxels.r74n.com/controls.txt",
           "screenshot": "texturecarpet.png",
-          "softwareRequirements": "HTML5",
+          "softwareRequirements": ["HTML5","BS5"],
           "archivedAt": "https://web.archive.org/web/20211230010640000/https://labsim.ebp11.repl.co/",
-          "copyrightYear": 2022
+          "copyrightYear": 2023
     }</script>
 
     <script src="load.js"></script>
@@ -141,7 +145,6 @@
 			<span>LabSim</span><style>body,html,p,button,*{font-family: nuevosans;}</style></center>
 			
 		</p>
-	&bull;
 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -362,10 +365,16 @@
                 "CL|XX|CL",
                 "XX|CL|XX",
             ],
+						AGSTRANGE: [
+								"M2 AND RP:antistrange_matter%25|RP:antistrange_matter%25|M2 AND RP:antistrange_matter%25",
+                "M1 AND RP:antistrange_matter%25|XX|M1 AND RP:antistrange_matter%25",
+                "M2 AND RP:antistrange_matter%25|RP:antistrange_matter%25 AND M1|M2 AND RP:antistrange_matter%25",
+            ],
+
 						STRANGE: [
-								"M2 AND RP:strange_matter%25|RP:strange_matter%25|M2 AND RP:strange_matter%25",
+								"M2 AND RP:strange_matter%25|RP:strange_matter%25 AND M1|M2 AND RP:strange_matter%25",
                 "M1 AND RP:strange_matter%25|XX|M1 AND RP:strange_matter%25",
-                "M2 AND RP:strange_matter%25|RP:strange_matter%25 AND M1|M2 AND RP:strange_matter%25",
+                "M2 AND RP:strange_matter%25|RP:strange_matter%25|M2 AND RP:strange_matter%25",
             ],
 						
             CLONER: [
@@ -546,6 +555,8 @@
         // burning - whether the element is burning on creation
         // charge - charge of the element on creation
         // hardness - chance of resisting damage (0-1)
+				// breakInto - what happens when the element is broken with the OG hammer
+				// atoms - what happens when the element is broken with an ultrahammer
         elements = {
             "heat": { //hard-coded
                 color: "#ff0000",
@@ -671,7 +682,8 @@
                 stateHigh: "molten_glass",
                 category: "solids",
                 state: "solid",
-                density: 1602
+                density: 1602,
+								atoms: "silicon"
             },
 					"redSandstone": {
                 color: "#D77A69",
@@ -681,7 +693,8 @@
                 category: "solids",
                 state: "solid",
 								stain: "A46E60",
-                density: 1602
+                density: 1602,
+								atoms: ["silicon", "iron"]
             },
             /* Tick Examples*/
             
@@ -729,7 +742,7 @@
                 density: 997,
                 conduct: 0.02,
                 stain: -0.5,
-								atoms: ["hydrogen", "hydrogen", "oxygen", "hydrogen", "hydrogen", "oxygen"]
+								atoms: ["hydrogen", "hydrogen", "oxygen", "hydrogen", "hydrogen", "oxygen"],
             },
             "salt_water": {
                 color: "#4d85ff",
@@ -763,7 +776,7 @@
                 density: 1026,
                 conduct: 0.1,
                 stain: -0.66,
-								atoms: ["hydrogen", "hydrogen", "oxygen", "sodium", "chlorine"]
+								atoms: ["water", "salt"],
             },
 						"muddy_water": {
                 color: "#4d85ff",
@@ -788,7 +801,6 @@
                 density: 1026,
                 conduct: 0.1,
                 stain: -0.66,
-								atoms: ["hydrogen", "hydrogen", "oxygen", "sodium", "chlorine"]
             },
 						"ocean": {
                 color: "#3d85ff",
@@ -797,6 +809,7 @@
                 stateHigh: ["steam","salt", "salt"],
                 tempLow: -2,
                 stateLow: "ice",
+								//atoms: ["water", "salt", "salt", "salt", "salt", "salt", "salt", "salt", "water"]
                 viscosity: 2,
                 category: "liquids",
                 reactions: {
@@ -852,7 +865,7 @@
                 density: 1026,
                 conduct: 0.05,
                 stain: -0.45,
-								atoms: ["hydrogen", "oxygen", "sugar"]
+								atoms: ["water", "sugar"]
             },
 						"color_water": {
                 color: ["#ff4d4d","#ffac4d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff", "#2167ff", "#2167ff", "#2167ff"],
@@ -1803,9 +1816,33 @@
 									"strange_quark": {"elem1": "strangelet", "chance":0.1}
 								}
             },
+						"antistrange_quark": {
+                color: "#CFEEAC",
+                behavior: behaviors.STRANGE,
+                category: "energy",
+								ignore: ["strange_quark", "strange_matter", "black_hole"],
+                state: "gas",
+								charge: -0.333,
+                density: 1,
+                reactions: {
+									"strange_quark": {"elem1": "strangelet", "chance":0.1}
+								}
+            },
 						"strangelet": {
                 color: "#CFEEAC",
                 behavior: behaviors.STRANGE,
+                category: "solids",
+								ignore: ["strange_quark", "strangelet", "strange_matter"],
+                state: "gas",
+                density: 2,
+								charge: -0.333,
+                reactions: {
+									"strangelet": {"elem1": "strange_matter", "chance":0.2}
+								}
+            },
+						"reverse_strangelet": {
+                color: "#CFEEAC",
+                behavior: behaviors.AGSTRANGE,
                 category: "solids",
 								ignore: ["strange_quark", "strangelet", "strange_matter"],
                 state: "gas",
@@ -1819,6 +1856,15 @@
                 color: "#CFEEAC",
                 behavior: behaviors.STRANGEMATTER,
                 category: "solids",
+                state: "solid",
+								ignore: ["strange_quark", "strangelet", "strange_matter"],
+								charge: -0.333,
+                density: 1,
+            },
+						"antistrange_matter": {
+                color: "#CFEEAC",
+                behavior: behaviors.AGSTRANGEMATTER,
+                category: "antimatter",
                 state: "solid",
 								ignore: ["strange_quark", "strangelet", "strange_matter"],
 								charge: -0.333,
@@ -12143,7 +12189,7 @@ runAfterLoad(function() {
             var stats = "<span id='stat-pos' class='stat'>&nbsp;&bull;&nbsp;Cursor position: ("+mousePos.x+", "+mousePos.y+")&nbsp;&bull;</span>";
             stats += "<span id='stat-pixels' class='stat'>Number of pixels:" + currentPixels.length+"&nbsp;&bull;</span>";
             stats += "<span id='stat-tps' class='stat'>" + tps+" frames per second&nbsp;&bull;</span>";
-						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.1 (E2L1S0RP7)&nbsp;&bull;</span>";
+						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.1 (E2L1S0FPR)&nbsp;&bull;</span>";
             //stats += "<span id='stat-ticks' class='stat'>" + pixelTicks+"</span>";
             if (typeof pixelMap == 'undefined') { return; }
             if (pixelMap[mousePos.x] != undefined  ) {
@@ -13212,6 +13258,34 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 		#controls button img {
 			margin-bottom: 4px;
 		}
+
+
+		@media (prefers-color-scheme: light) {
+		   #gameDiv, #settingsMenu, #modMenu {
+		background: rgba(255, 255, 255, .15);backdrop-filter: blur(5px);
+  }
+	#gameDiv:before, #settingsMenu:before, #modMenu:before {
+			  box-shadow: inset 8px 8px 8px 8px grey;
+			  filter: blur(10px);
+			}
+		}
+@media (prefers-color-scheme: dark) {
+  #gameDiv, #settingsMenu, #modMenu {
+	  box-shadow:  1px 1px 1px 1px white; 
+		background: rgba(205, 205, 205, .15);backdrop-filter: blur(5px);
+  }
+	#gameDiv:before, #modMenu:before {
+			  box-shadow: inset 8px 8px 8px 8px w;
+			  filter: blur(10px);
+			}
+	#settingsMenu:before {
+			  filter: blur(10px);
+			}
+	#settingsMenu {
+		border: none;
+		overflow: scroll;
+	}
+}
 	</style>
     <div id="gameDiv" style='border-radius: 8px; background-color: black; '>
 				<center><div id="underDiv">
@@ -13378,8 +13452,7 @@ function myFunctionXL() {
     <div id="modParent">
         <div id="modManager">
             <button class="XButton" onclick="closeMenu();">-</button>
-            <span class="menuTitle">Enabled Plug-ins<br/><small><span class="menuTitle">Enabled Plug-ins<br/><small><a href="/challenges/">Challenges Plug-in</a></small></span><br/>
-							<small><a href="/demonstrations.html">Demonstrations Plug-in</a></small></span>
+            <span class="menuTitle">Enabled Plug-ins<br/><small><a href="/challenges/">Challenges Plug-in</a></small></span><br/>
             <ul class="menuText" id="modManagerList"></ul>
             <br><br><br><br>
             <!--If the key is Enter, addMod -->
@@ -13389,7 +13462,7 @@ function myFunctionXL() {
     </div>
     <!--Settings Menu-->
     <div id="settingsParent"><!--<script src="triangles.js"></script>--><style>#settingsMenu *, #gameDiv, #canvasDiv {backdrop-filter: blur(4px);-moz-backdrop-filter: blur(4px);-o-backdrop-filter: blur(4px);-webkit-backdrop-filter: blur(4px);}</style>
-        <div id="settingsMenu" style="box-shadow: 1px 1px 6px white, 2px 2px 4px white inset;border-radius: 4px;height: auto;font-family: 'calibri', 'helvetica', serif;opacity: 95%;color: white;border: none;outline: 0px;resize: both;filter: brightness(98%);">
+        <div id="settingsMenu">
 						<p>LabSim Control <span id='british1'>Centre</span></p>
             <button class="XButton" onclick="closeMenu();" style='background-color: red; border-radius: 50%; width: 16px; height: 16px; border: 0.5px solid grey; margin: 6px;'></button>
 						<span class='menuTitle'>Information</span>

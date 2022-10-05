@@ -24,75 +24,9 @@ elements.anticookedmeat = {
                 state: "solid",
                 density: 1067.5,
             },
-            elements.antichocolate = {
-                color: "#4d2818",
-                behavior: behaviors.AGPOWDER,
-                tempHigh: 31,
-                stateHigh: "chocolate_syrup",
-                category: "antimatter",
-                state: "solid",
-                density: 1325,
-            },
-elements.sodawater = {
-                color: "#BAD5FF",
-                behavior: behaviors.LIQUID,
-                tempHigh: 105,
-                stateHigh: ["steam","baking_soda"],
-                tempLow: -5,
-                stateLow: ["ice","baking_soda"],
-                viscosity: 5,
-                category: "liquids",
-                reactions: {
-                    "dirt": { "elem1": null, "elem2": "mud" },
-                    "sand": { "elem1": null, "elem2": "wet_sand", },
-                    "dust": { "elem1": "dirty_water", "elem2": null, },
-                    "ash": { "elem1": "dirty_water", "elem2": null, },
-                    "carbon_dioxide": { "elem1": "water", "elem2": null, },
-                    "sulfur": { "elem1": "dirty_water", "elem2": null, },
-                    "charcoal": { "elem1": "dirty_water", chance:0.005 },
-                    "rat": { "elem1": "dirty_water", chance:0.005 },
-                    "plague": { "elem1": "dirty_water", "elem2": null, },
-                    "fallout": { "elem1": "dirty_water", chance:0.25 },
-                    "radiation": { "elem1": "dirty_water", chance:0.25 },
-                    "rust": { "elem1": "dirty_water", chance:0.005 },
-                    "rock": { "elem2": "wet_sand", "chance": 0.0004 },
-                },
-                hidden: false,
-                state: "liquid",
-                density: 1026,
-                conduct: 0.05,
-                stain: -0.45,
-            },
-	elements.antisodawater = {
-                color: "#BAD5FF",
-                behavior: behaviors.AGLIQUID,
-                tempHigh: 105,
-                stateHigh: ["antisteam","antibakingsoda"],
-                tempLow: -5,
-                stateLow: ["antiice","antibakingsoda"],
-                viscosity: 5,
-                category: "antimatter",
-                reactions: {
-                    //"dirt": { "elem1": null, "elem2": "mud" },
-                    //"sand": { "elem1": null, "elem2": "wet_sand", },
-                    "antidust": { "elem1": "dirty_water", "elem2": null, },
-                    "antish": { "elem1": "dirty_water", "elem2": null, },
-                    //"carbon_dioxide": { "elem1": "water", "elem2": null, },
-                    //"sulfur": { "elem1": "dirty_water", "elem2": null, },
-                    //"charcoal": { "elem1": "dirty_water", chance:0.005 },
-                    //"rat": { "elem1": "dirty_water", chance:0.005 },
-                    //"plague": { "elem1": "dirty_water", "elem2": null, },
-                    //"fallout": { "elem1": "dirty_water", chance:0.25 },
-                    //"radiation": { "elem1": "dirty_water", chance:0.25 },
-                    //"rust": { "elem1": "dirty_water", chance:0.005 },
-                    "antibasalt": { "elem2": "antigravel", "chance": 0.0004 },
-                },
-                hidden: false,
-                state: "liquid",
-                density: 1026,
-                conduct: 0.05,
-                stain: -0.45,
-            },
+           
+
+	
 elements.antimeat = {
                 color: ["#9E4839","#BA6449","#D2856C","#A14940"],
                 behavior: behaviors.AGMEAT,
@@ -265,50 +199,12 @@ elements.antimilk = {
                 density: 1036.86,
             },
 
-elements.antiudder = {
-                color: "#ecb3f5",
-                behavior: [
-                    "XX|CR:antimilk%2.5|XX",
-                    "XX|XX|XX",
-                    "XX|XX|XX",
-                ],
-                tempHigh: 80,
-                stateHigh: "anticookedmeat",
-                tempLow: -18,
-                stateLow: "antifrozenmeat",
-                category:"antimatter",
-            },
+
 
 	
-elements.antiraincloud = {
-                color: "#636b78",
-                behavior: [
-                    "XX|CR:antiwater|XX",
-                    "XX|XX|XX",
-                    "CR:positric%0.05|CR:positric%0.05|CR:positric%0.05",
-                ],
-                category:"antimatter",
-                temp: 80,
-                tempLow: 0,
-                stateLow: "antiwater",
-                state: "gas",
-                density: 0.5,
-                conduct: 0.03,
-            },
 
-elements.antisugaryraincloud = {
-                color: "#9EF3FF",
-                behavior: [
-                    "XX|CR:antisugarwater%2.5|XX",
-                    "XX|XX|XX",
-                    "XX|XX|XX",
-                ],
 
-                tempLow: 0,
-								state: "gas",
-                stateLow: ["antiwater", "antisugar"],
-                category:"antimatter",
-            },
+
 	/*elements.antisaltyraincloud = {
                 color: "#BSDFFF",
                 behavior: [
@@ -334,90 +230,9 @@ elements.antisodaraincloud = {
                 category:"antilife",
             },*/
 	
-elements.antimagmacloud = {
-                color: "#ffa500",
-                behavior: [
-                    "XX|CR:antimagma%2.5|XX",
-                    "XX|XX|XX",
-                    "XX|XX|XX",
-                ],
-                tempLow: 1200,
-								state: "gas",
-                stateLow: "antibasalt",
-								temp: 1250,
-                category:"antimatter",
-            },
-	elements.antichocolatecloud = {
-                color: "#946b00",
-                behavior: [
-                    "XX|CR:antichocolate%2.5|XX",
-                    "XX|XX|XX",
-                    "XX|XX|XX",
-                ],
-                tempHigh: 80,
-                stateHigh: "anticookedmeat",
-                tempLow: -18,
-								state: "gas",
-                stateLow: "antifrozenmeat",
-                category:"antimatter",
-            },
 
-	elements.invinciblespout = {
-                color: "#636b78",
-                behavior: [
-                    "XX|XX|XX",
-                    "M1%5|CH:water%0.05|M1%5",
-                    "CR:electric%0.05|CR:electric%0.05|CR:electric%0.05",
-                ],
-                category:"special",
-                temp: 80,
-                tempLow: 0,
-                stateLow: "spout",
-                state: "solid",
-                density: 0.5,
-                conduct: 0.03,
-            },
 
-	elements.antifirecloud = {
-                color: ["#332424","#473431","#473931"],
-                behavior: [
-                    "XX|XX|XX",
-                    "M1%5|CH:antifire%0.02|M1%5",
-                    "XX|XX|XX",
-                ],
-                reactions: {
-                    "rain_cloud": { "elem1": "pyrocumulus", "elem2": "pyrocumulus" },
-                    "snow_cloud": { "elem1": "pyrocumulus", "elem2": "rain_cloud" },
-                    "hail_cloud": { "elem1": "pyrocumulus", "elem2": "snow_cloud" },
-                    "acid_cloud": { "elem1": "fire", "elem2": "electric" },
-                },
-                temp: 500,
-                tempLow: 100,
-                stateLow: "pyrocumulus",
-                category:"antimatter",
-                state: "gas",
-                density: 0.59,
-            },
-elements.antiyoghurt = {
-                color: "#f0efe6",
-                behavior: behaviors.AGPOWDER,
-                category: "antimatter",
-                state: "liquid",
-                density: 820.33,
-            },
-
-elements.antiyoghurtcloud = {
-                color: "#ffffe7",
-                behavior: [
-                    "XX|CR:antiyoghurt%2.5|XX",
-                    "XX|XX|XX",
-                    "XX|XX|XX",
-                ],
-                tempLow: -18,
-								state: "gas",
-                stateLow: "antimilk",
-                category:"antimatter",
-            },
+	
 
 	
 elements.antisolidvibranium = {
