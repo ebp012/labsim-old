@@ -45,7 +45,6 @@
 		<meta name="theme-color" content="#000027" id='okok'>
 		<script>var webkitTheme=document.getElementById("okok");</script>
     <!--Favicons-->
-		<link rel="apple-touch-icon" sizes="180x180" href="https://labsim-beta.ebp11.repl.co/images/logo.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png?v=2">
     <link rel="manifest" href="/manifest.json">
@@ -53,7 +52,7 @@
     <link rel="shortcut icon" href="icons/favicon.ico?v=2">
     <meta name="msapplication-TileColor" content="#e6d577">
     <meta name="theme-color" content="#000000">
-		<link rel="icon" href="https://labsim-beta.ebp11.repl.co/images/logo.png">
+		<link rel="icon" href="images/logo.png">
 		
     <!--OpenGraph-->
     <meta property="og:locale" content="en_IN">
@@ -62,7 +61,7 @@
     <meta property="og:description" content="Conduct experiments and play with dangerous elements. All without risking your life or getting a laboratory.">
     <meta property="og:url" content="https://labsim-beta.ebp11.repl.co">
     <meta property="og:site_name" content="LabSim">
-    <meta property="og:image" content="texturecarpet.png">
+    <meta property="og:image" content="https://labsim-beta.ebp11.repl.co/texturecarpet.png">
     <meta property="og:image:width" content="1980">
     <meta property="og:image:height" content="971">
     <meta property="og:image:type" content="image/png">
@@ -73,10 +72,26 @@
     <meta name="twitter:description" content="An educational game where you can learn for class but also do for fun. Oddly satisfying!">
     <meta name="twitter:title" content="LabSim">
     <meta name="twitter:site:id" content="1436857621827530753">
-    <meta name="twitter:image" content="texturecarpet.png">
+    <meta name="twitter:image" content="https://labsim-beta.ebp11.repl.co/texturecarpet.png">
     <meta name="twitter:image:alt" content="All of the popular elements put together into one image.">
     <meta name="twitter:creator:id" content="1436857621827530753">
 
+		<!-- iOS Progressive Web App -->
+	
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-startup-image" href="/images/Reglogo.png">
+	<meta name="apple-mobile-web-app-title" content="LabSim">
+
+	<style>
+		body {
+   		-webkit-user-select: none;
+			-webkit-tap-highlight-color: transparent;
+			-webkit-touch-callout: none;
+		}
+	</style>
+	<!-- iOS Progressive Web App -->
+	
     <!-- Schema -->
     <script type="application/ld+json">
         {
@@ -11372,24 +11387,11 @@ elements.move_right = {
                 pixel = pixelDrawList[i];
                 if (pixelMap[pixel.x][pixel.y] == undefined) {continue}
                 if (view===null || view===3) {
-                    ctx.fillStyle = pixel.color;
-                }
-                else if (view === 2) { // thermal view
-                    // set the color to pixel.temp, from hottest at 0 hue to coldest 225 hue, with the minimum being -273, max being 6000
-                    var temp = pixel.temp;
-                    if (temp < -273.15) {temp = -273.15}
-                    if (temp > 6000) {temp = 6000}
-                    var hue = 225 - (temp/6000)*225;
-                    if (hue < 0) {hue = 0}
-                    if (hue > 225) {hue = 225}
-                    ctx.fillStyle = "hsl("+hue+",100%,50%)";
-                }
-                else if (view === 4) { // smooth view, average of surrounding pixels
                     var colorlist = [];
                     // check adjacent coords on the pixelMap, add the color to the list if the pixel is not empty and the color indexOf "rgb" is not -1
                     for (var j = 0; j < biCoords.length; j++) {
-                        var x = pixel.x + biCoords[j][0];
-                        var y = pixel.y + biCoords[j][1];
+                        var x = pixel.x + biCoords[j][0] - 1;
+                        var y = pixel.y + biCoords[j][1] - 1;
                         if (isEmpty(x,y,true) || elements[pixelMap[x][y].element].state !== elements[pixel.element].state) {continue}
                         var color = pixelMap[x][y].color;
                         if (color.indexOf("rgb") !== -1) {
@@ -11402,6 +11404,20 @@ elements.move_right = {
                     else {
                         ctx.fillStyle = averageRGB(colorlist);
                     }
+                }
+                else if (view === 2) { // thermal view
+                    // set the color to pixel.temp, from hottest at 0 hue to coldest 225 hue, with the minimum being -273, max being 6000
+                    var temp = pixel.temp;
+                    if (temp < -273.15) {temp = -273.15}
+                    if (temp > 6000) {temp = 6000}
+                    var hue = 225 - (temp/6000)*225;
+                    if (hue < 0) {hue = 0}
+                    if (hue > 225) {hue = 225}
+                    ctx.fillStyle = "hsl("+hue+",100%,50%)";
+                }
+                else if (view === 4) { // smooth view, average of surrounding pixels
+                  	ctx.fillStyle = pixel.color;  
+										
                 }
                 if ((view === null || view === 4) && elements[pixel.element].state === "gas") {
                     ctx.globalAlpha = 0.5;
@@ -11488,8 +11504,8 @@ elements.move_right = {
             var rect = canvas.getBoundingClientRect();
             return {
                 // Round to nearest pixel
-            x: Math.round((evt.clientX - rect.left)/pixelSize-0.5),
-            y: Math.round((evt.clientY - rect.top)/pixelSize-0.5)
+            x: Math.round((evt.clientX - rect.left)/pixelSize),
+            y: Math.round((evt.clientY - rect.top)/pixelSize)
             };
         }
         function mouseMove(e) {
@@ -13255,6 +13271,19 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 		}
 
 
+		/* MOBILE DEVICES */
+		@media only screen and (max-width: 600px) {
+  		#gameDiv {
+		    width: 100%;
+				border-radius: 1px;
+		  }
+			#canvasDiv {
+				width: 100%;
+			}
+		}
+		
+		/* LIGHT MODE and DARK MODE */
+
 		@media (prefers-color-scheme: light) {
 		   #gameDiv, #settingsMenu, #modMenu {
 		background: rgba(255, 255, 255, .15);backdrop-filter: blur(5px);
@@ -13287,7 +13316,22 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
             <div id="stats" style='display:block;margin-left:auto;margin-right:auto;'></div>
 						<button id="menuBtn" title="Toggle visibility of the controls" class="controlButton" onclick='myFunctionXR();' on="false"><i class='fa fa-th-large'></i></button>
             <div id="controls">
-							<button id="pauseButton" title="Freeze and unfreeze" class="controlButton" onclick='togglePause();focusGame();' onmouseover='togglePause();focusGame();' on="false"><i class='fa fa-snowflake-o'></i></button><button id="frameButton" title="Pause and play one frame" class="controlButton" onclick='doFrame();focusGame();' on="false"><img src='https://labsim-beta.ebp11.repl.co/images/skip.png' style='height: 24px;width:24px ;'></img></button><button id="sizeDownButton" title="Decrease the brush size" class="controlButton" onclick="mouseSize -= 2;if (mouseSize < 1) { mouseSize = 1; };focusGame();">-</button><button id="sizeUpButton" title="Increase the brush size" class="controlButton" onclick="mouseSize += 2;if (mouseSize > (height > width ? height : width)) { mouseSize = (height > width ? height : width); };focusGame();">+</button><button id="resetButton" title="Clear the entire scene" class="controlButton fa fa-refresh" onclick="if (confirm('Are you sure you want to clear the whole scene?')) {clearAll();};focusGame();"></button><!--<button id="elemSelectButton" title="Select an element by ID" class="controlButton" onclick='chooseElementPrompt();focusGame();'>E</button>--<button id="tpsButton" title="Change the simulation Ticks Per Second (TPS)" class="controlButton" onclick='var newtps = prompt("Enter the new simulation Ticks Per Second (TPS). This is how many updates per second the simulation will run.\n\nThe default is 1000.\n\nThe current TPS is " + tps + ".");if (newtps !== null) {if (isNaN(newtps) || newtps == "" || newtps == "0") {alert("You did not enter a valid TPS.");}else if (newtps > 1000) {alert("You entered a TPS that is too high. The TPS will be set to the maximum, 1000.");tps = 1000;}else {tps = parseInt(newtps);if (isNaN(tps)) {alert("You did not enter a valid TPS.");tps = 240;}}resetInterval(tps);}focusGame();'>Tps</button><!--<button id="hideButton" title="Stops updating the scene to allow more resources towards simulation" class="controlButton" onclick='if (hiding) {hiding = false;this.setAttribute("on","false");}else {hiding = true;this.setAttribute("on","true");};focusGame();' on="false">Hide</button>--><button id="infoButton" title="Brings up the element info screen" class="controlButton fa fa-info" onclick='if (showingMenu!="info"){closeMenu();showInfo(currentElement)}else{closeMenu()};' on="false"></button><!--<button id="modsButton" title="Brings up the Mod Manager" class="controlButton" onclick='if (showingMenu!="mods"){closeMenu();showModManager()}else{closeMenu()};' on="false">Mods</button>--><button id="settingsButton" title="Brings up the settings screen" class="controlButton fa fa-gear" onclick='if (showingMenu!="settings"){closeMenu();showSettings()}else{closeMenu()};' on="false"></button><!--showModManager()--><button id="modsButton" title="Brings up the plug-ins screen" class="controlButton fa fa-puzzle-piece" onclick='showModManager();' on="false"></button>
+							<button id="pauseButton" title="Freeze and unfreeze" class="controlButton" onclick='togglePause();focusGame();' onmouseover='togglePause();focusGame();' on="false"><i class='fa fa-snowflake-o'></i></button>
+							
+							<button id="frameButton" title="Pause and play one frame" class="controlButton" onclick='doFrame();focusGame();' on="false"><img src='https://labsim-beta.ebp11.repl.co/images/skip.png' style='height: 24px;width:24px ;'></img></button>
+							
+							<button id="sizeDownButton" title="Decrease the brush size" class="controlButton" onclick="mouseSize -= 2;if (mouseSize < 1) { mouseSize = 0; };focusGame();">-</button>
+							
+							<button id="sizeUpButton" title="Increase the brush size" class="controlButton" onclick="mouseSize += 2;if (mouseSize > (height > width ? height : width)) { mouseSize = (height > width ? height : width); };focusGame();">+</button>
+							
+							<button id="resetButton" title="Clear the entire scene" class="controlButton fa fa-refresh" onclick="if (confirm('Are you sure you want to clear the whole scene?')) {clearAll();};focusGame();"></button><!--<button id="elemSelectButton" title="Select an element by ID" class="controlButton" onclick='chooseElementPrompt();focusGame();'>E</button>-->
+							
+							<button id="hideButton" title="Stops updating the scene to allow more resources towards simulation" class="controlButton" onclick='if (hiding) {hiding = false;this.setAttribute("on","false");}else {hiding = true;this.setAttribute("on","true");};focusGame();' on="false">Hide</button>
+							
+							<button id="infoButton" title="Brings up the element info screen" class="controlButton fa fa-info" onclick='if (showingMenu!="info"){closeMenu();showInfo(currentElement)}else{closeMenu()};' on="false"></button>
+							
+							<button id="settingsButton" title="Brings up the settings screen" class="controlButton fa fa-gear" onclick='if (showingMenu!="settings"){closeMenu();showSettings()}else{closeMenu()};' on="false"></button><!--showModManager()--><button id="modsButton" title="Brings up the plug-ins screen" class="controlButton fa fa-puzzle-piece" onclick='showModManager();' on="false"></button>
+							
 <button id="elementsButton" title="Show the elements" class="controlButton fa fa-close" oncontextmenu="return false; myFunctionXL();" onclick='myFunctionXS();' onmouseover='myFunctionXS();' on="false"></button>
 <button id="elementsButton" title="Open LabSim in fullscreen" class="controlButton fa fa-arrows-alt"  onclick='openingFullScreen();' on="false"></button>
 <button id="researchButton" title="Open Aeonic Web Site" class="controlButton fa fa-globe"  onclick='document.getElementById("researchMenu").style.display="block";' on="false"></button>

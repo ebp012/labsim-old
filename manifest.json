@@ -1,0 +1,17 @@
+{
+    "name":"LabSim Globe",
+    "short_name":"LabSim",
+    "start_url":"/index.html",
+    "display":"standalone",
+    "background_color":"#000027",
+    "theme_color":"black",
+    "scope": ".",
+    "description":"Play with dangerous elements without risking your life — all in the comfort of your own home, school or office.",
+    "icons":[
+    {
+    "src":"images/icon.png",                     
+    "sizes":"192x192",
+    "type":"image/png"
+    },
+  ]
+}
