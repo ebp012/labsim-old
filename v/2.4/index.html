@@ -1344,15 +1344,16 @@
                 density: 917,
                 breakInto: "snow",
             },
-						"eraser": { //hard-coded
+						"solid_eraser": { //hard-coded
                 color: "#fdb5ff",
                 behavior: [
                     "DL|DL|DL",
                     "DL|XX|DL",
-                    "DL|DL AND M1|DL",
+                    "DL AND M2|DL AND M1|DL AND M2",
                 ],
                 category: "solids",
 								stateHigh: "molten_plastic",
+								name: "Plastic Eraser",
 								tempHigh: 148,
 								state:"solid",
             },
@@ -1784,8 +1785,8 @@
 						"antieraser": { //hard-coded
                 color: "#fdb5ff",
                 behavior: [
-                    "DL|DL AND M1|DL",
-                    "DL|XX|DL",
+                    "DL AND M2|DL AND M1|DL AND M2",
+                    "DL AND M2|XX|DL AND M2",
                     "DL|DL|DL",
                 ],
                 category: "antimatter",

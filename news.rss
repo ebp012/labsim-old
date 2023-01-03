@@ -5,6 +5,12 @@
 		<link>https://labsim.ebp11.repl.co</link>
 		<description>This is where you'll find tons of news concerning LabSim, the virtual chemistry sandbox.</description>
 		<item>
+			<title>LabSim 2.4 released</title>
+			<link>https://www.aeonic.eu.org/updates.html</link>
+			<description>Aeonic has now updated LabSim once again, announcing tons of new features including varieties of poop, microscope functionality, the ability to use almonds to make stuff, bug fixes, and plagued materials.</description>
+			<pubDate>2 January 2022</pubDate>
+		</item>
+		<item>
 			<title>LabSim 2.0.2 released</title>
 			<link>https://labsim.ebp11.repl.co</link>
 			<description>After the redesign and sidebar in LabSim 2.0, we've <i>finally</i> added another feature: tabbing and windowing support. The window switcher is available for free as a sidebar gadget, and does not require installation due to it being auto-installed for you. For those who wish not to use such gadget, it may be removed by pressing the gears to get to Personalisation, and then hiding the gadget "Window Switcher". Although still in progress, at this time you may access the default sandbox as well as the freshly updated Demonstrations page. The Aeonic Corporation hopes you enjoy this new feature.</description>
