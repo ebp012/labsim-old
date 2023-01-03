@@ -8,7 +8,7 @@
 	
 	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-title" content="LabSim">
+	<meta name="apple-mobile-web-app-title" content="Neutron">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 	<style>
@@ -60,8 +60,6 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
-</style>
-	<style>
 		body, html {width: 100%; height: 100%; margin: 0; padding: 0}
 		        html, body {
             width:  100%;
@@ -69,7 +67,7 @@
             margin: 0;
         }
         body {
-            font-family: 'Press Start 2P';
+            font-family: 'Futura';
             background-color: #000027;
             color: #ffffff;
         }
@@ -84,399 +82,145 @@
         a {color: rgb(255, 0, 255);text-decoration: none;}
         a:hover {color: rgb(255, 121, 255);}
         a:active, a:hover:active {color: rgb(255, 179, 255);}
-        #gameDiv { /*game canvas*/
-            border: 1px solid #ffffff;
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, -0%);
-            -webkit-touch-callout: none; /* iOS Safari */
-                -webkit-user-select: none; /* Safari */
-                -khtml-user-select: none; /* Konqueror HTML */
-                -moz-user-select: none; /* Old versions of Firefox */
-                    -ms-user-select: none; /* Internet Explorer/Edge */
-                        user-select: none;
-            margin-top: 15px;
-        }
-        #infoParent, #modParent, #settingsParent {
-            display: none;
-        }
-        #infoScreen, #modManager, #settingsMenu {
-            border: 1px solid #ffffff;
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, 28%);
-            width: 95%;
-            height: 50%;
-            max-width: 900px;
-            padding: 10px;
-            background-color: rgb(31, 31, 31);
-            overflow-x: hidden;
-        }
-        .menuTitle {
-            font-size: 1.5em;
-            text-decoration: underline;
-        }
-        .menuText {
-            margin-top: 5px;
-            line-height: 1.5em;
-        }
-        #infoText {
-            white-space: pre-wrap;
-        }
-        .XButton {
-            position: absolute;
-            right: 0px;
-            top: 0px;
-            font-size: 2em;
-            background-color: rgb(100, 33, 33);
-            padding:5px;
-            text-align:center;
-            border: 1px solid #ffffff;
-        }
-        .XButton:hover {
-            background-color: rgb(200, 33, 33);
-        }
-        #infoSearch, #modManagerUrl {
-            position: absolute;
-            bottom: 50%;
-            width: 95%;
-            max-width: 700px;
-            height: 50px;
-            left: 50%;
-            transform: translate(-50%, 198.5%);
-            background-color: rgb(66, 66, 66);
-            color: white;
-            font-size: 1.5em;
-            padding: 8px;
-            font-family: 'Press Start 2P';
-        }
-        #infoSearch:focus, #modManagerUrl:focus {
-            outline: none;
-        }
-        /*#modManagerAdd {
-            position: absolute;
-            bottom: 25%;
-            right: 25%;
-            height: 50px;
-            width: 50px;
-            transform: translate(-25%, -25%);
-            background-color: rgb(0, 190, 32);
-            color: white;
-            font-size: 2em;
-            padding: 10px;
-            font-family: 'Press Start 2P';
-        }*/
-        #modManagerList {
-            margin-top: 20px;
-        }
-        #modManagerList li {
-            list-style-type: none;
-            position: relative;
-        }
-        #modManagerList li::before {
-            content: '•';
-            position: absolute;
-            left: -1.5em;
-            font-size: 1em;
-            font-family: 'Press Start 2P';
-        }
-        .removeModX {
-            color: red;
-            cursor: pointer;
-        }
-        .removeModX:hover {
-            color: rgb(255, 107, 107);
-        }
-        .infoLink {
-            color: rgb(116, 140, 221);
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        button, input[type="submit"], input[type="reset"] {
-            background: none;
-            color: inherit;
-            border: none;
-            padding: 0;
-            font: inherit;
-            cursor: pointer;
-        }
-        .usingTab button:focus {
-            filter: brightness(75%);
-            outline: none;
-        }
-        #underBox {
-            position: absolute;
-            left: 50%;
-            transform: translate(-50%, -0%);
-            margin-top: 10px;
-            width: 100%;
-        }
-        #controls button {
-            padding: 5px 10px;
-						padding-left: 6px;
-						padding-right: 6px;
-            border-radius: 15px;
-            font-size: 1em;
-            text-shadow: 0.5px 1px 4px #000000;
-            color: rgba(255, 255, 255, 0.75);
-            border: 1px solid #797979;
-            margin: 0px 5px 5px 5px;
-            font-variant: small-caps;
-        }
-        #controls button.bright {
-            text-shadow: 0.5px 1px 4px #ffffff;
-            color: rgba(0, 0, 0, 0.75);   
-        }
-        /*Darken when active*/
-        #controls button:active, #controls button:active:hover {
-            filter: brightness(60%);
-        }
-        #controls button:hover {
-            filter: brightness(90%);
-        }
-        #controls button:disabled {
-            cursor: not-allowed;
-        }
-        #controls button[current="true"], #controls button[on="true"] {
-            border: 1px solid #ffffff;
-            filter: brightness(110%);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, .4);
-            color: rgba(255, 255, 255, 1);
-        }
-        #controls button.bright[current="true"] {
-            color: rgba(0, 0, 0, 1);
-        }
-        #controls button[on="true"] {
-            border-color:lime;
-            color:lime;
-        }
-        #controls div {
-            display:block;
-        }
-        .stat {
-            margin-right: 25px;
-            margin-bottom: 5px;
-            float:right;
-        }
-				#tabs b {
-					border-radius: 10px;
-					padding: 3px;
-					width: auto;
-					background: white;
-					color: black;
-					margin-top: 2px;
-					margin-bottom: 2px;
-				}
-        #stats {
-            margin: 0px 5px 5px 5px;
-            font-size: 0.75em;
-            height: 2em;
-            width:100%;
-        }
-        /* screen size < 700px */
-        @media screen and (max-width: 700px) {
-            #stats {padding-bottom:2em;}
-            .pagetitle {
-                font-size: 1em;
-                padding-left: 0.25em;
-            }
-        }
-        /* screen size > 1325px, h1::after {content:" Sandboxels"} */
-        @media screen and (min-width: 1325px) {
-            .pagetitle::after {content:" Sandboxels"}
-        }
-        #stat-pos, #stat-pixels, #stat-shift, #stat-tps, #stat-ticks, #stat-view {
-            float:left;
-        }
-        .categoryName {
-            font-size: 0.75em;
-            text-transform: uppercase;
-            margin-left: 5px;
-            vertical-align: middle;
-        }
-        #extraInfo {
-            margin:5px
-        }
-        #toolControls, #category-tools {
-            white-space: nowrap;
-            overflow-x: auto;
-            overflow-y: hidden;
-            width: 100%;
-            position: absolute;
-        }
-
-        /* Scrollbars */
-
-        #toolControls, #category-tools, #categoryControls, #elementControls {
-          scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.1);
-          scrollbar-width: thin;
-        }
-
-        @media screen and (max-width: 700px) {
-          #toolControls, #category-tools, #categoryControls, #elementControls {
-            margin-bottom: 200px !important;
-          }
-        }
-        
-        #toolControls::-webkit-scrollbar, #category-tools::-webkit-scrollbar, #categoryControls::-webkit-scrollbar, #elementControls::-webkit-scrollbar {
-            width: 5px;
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        #toolControls::-webkit-scrollbar-thumb, #category-tools::-webkit-scrollbar-thumb, #categoryControls::-webkit-scrollbar-thumb, #elementControls::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.25);
-            border-radius: 5px;
-        }
-        #toolControls::-webkit-scrollbar-track, #category-tools::-webkit-scrollbar-track, #categoryControls::-webkit-scrollbar-track, #elementControls::-webkit-scrollbar-track {
-            box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-        }
-        #toolControls::-webkit-scrollbar-thumb:hover, #category-tools::-webkit-scrollbar-thumb:hover, #categoryControls::-webkit-scrollbar-thumb:hover, #elementControls::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
+               
 				button {
 					 border-radius: 50%; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none; width: auto;
 				}
 
-        #toolControls {
-            margin-top: -3.5em;
-            z-index: 3;
-        }
-        #category-tools {
-            margin-top: -1.5em;
-            z-index: 2;
-        }
-        .category {
-            padding-top: 3em;
-        }
-        #categoryControls {
-            margin-top: 0.5em;
-            margin-bottom: 5px;
-            background-color: rgba(255, 255, 255, 0.125);
-            white-space: nowrap;
-            overflow-x: auto;
-            overflow-y: hidden;
-            width: 100%;
-            position: absolute;
-            z-index: 1;
-            padding-bottom:1px;
-        }
-        #categoryControls button {
-            /* Borderless buttons */
-            border: none;
-            border-radius: 0;
-            padding-right: 8px;
-            margin: 0;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            display: inline-block;
-            position: relative;
-            z-index:0;
-        }
-        #categoryControls button:not(:last-child) {
-            border-right: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        #categoryControls button[current="true"] {
-            border: none;
-            background-color: rgba(255, 255, 255, 0.4);
-        }
-        .category {
-            margin-top:3.1em;
-            position:relative;
-            display:flex;
-            flex-direction: column;
-            flex-wrap:wrap;
-            text-align:center;
-        }
+        
         button, input { /*Disable double tap zoom on mobile devices*/
             touch-action: manipulation;
-        }
-        select {
-            background-color: black;
-            vertical-align: middle;
-            margin-left: 5px;
-            margin-right: 5px;
-            border: white 0.5px solid;
-            border-radius: 20px;
-            padding: 0.5em;
-            color: white;
-        }
-        #canvasDiv {
-            position:relative;
-        }
-        #colorSelector {
-            position:absolute;
-            bottom:1em;
-            right:1em;
-            display: none;
-        }
-		#sidebar {
-			min-width: 275px;
-			max-width: 25%;
-			min-height: 85%;
-			max-height: 95%;
-			height: 90%; overflow: auto; resize: both; width: 19%; border: none; left: 25px; float: left; position: fixed; top: 25px; bottom: 25px; 
-		}
-		@media (prefers-color-scheme: light) {
-		   #sidebar {
-    border-radius: 25px; 
-	  box-shadow:  1px 1px 1px 1px grey; 
-		background: rgba(255, 255, 255, .15);backdrop-filter: blur(5px);
-  }
-	#sidebar:before {
-			  box-shadow: inset 8px 8px 8px 8px grey;
-			  filter: blur(10px);
-			}
-		}
-@media (prefers-color-scheme: dark) {
-  #sidebar, button {
-    border-radius: 25px; 
-	  box-shadow:  1px 1px 1px 1px grey; 
-		background: rgba(205, 205, 205, .15);backdrop-filter: blur(5px);
-  }
-	#sidebar:before, button:before {
-			  box-shadow: inset 8px 8px 8px 8px grey;
-			  filter: blur(10px);
-			}
-}
-@media screen and (max-width: 900px) {
-  #mobileMinimiser {
-    display: block;
-  }
-}
+				}
+				#sidebar {
+					min-width: 275px;
+					max-width: 25%;
+					min-height: 85%;
+					max-height: 95%;
+					height: 90%; overflow: auto; resize: both; width: 19%; border: none; left: 25px; float: left; position: fixed; top: 25px; bottom: 25px; 
+				}
+				@media (prefers-color-scheme: light) {
+				   #sidebar {
+		    		border-radius: 25px; 
+					  /*box-shadow:  1px 1px 1px 1px grey; */
+						background: rgba(255, 255, 255, .15);backdrop-filter: blur(5px);
+				  }
+					#sidebar:before {
+							  box-shadow: inset 8px 8px 8px 8px grey;
+							  filter: blur(10px);
+					}
+				}
+				@media (prefers-color-scheme: dark) {
+				  #sidebar, button {
+				    border-radius: 25px; 
+					  box-shadow:  1px 1px 1px 1px grey; 
+						background: rgba(205, 205, 205, .15);backdrop-filter: blur(5px);
+				  }
+					#sidebar:before, button:before {
+							  box-shadow: inset 8px 8px 8px 8px grey;
+							  filter: blur(10px);
+					}
+				}
+				@media screen and (max-width: 900px) {
+				  #mobileMinimiser {
+				    display: block;
+				  }
+				}
+				#personalise {
+					background: rgba(255, 255, 255, .15);backdrop-filter: blur(5px);
+		  	}
+				#personalise:before {
+					/*box-shadow: inset 8px 8px 8px 8px grey;*/
+					filter: blur(10px);
+				}
+				#appbar {
+					height: 100%;
+					background-image: linear-gradient(to left, navy, navy);
+					right: 0;
+					top: 0;
+					bottom: 0;
+					width: 55px;
+					z-index: 30;
+					position: fixed;
+				}
+				#appbar img {
+					height: 53px;
+					width: 53px;
+					border-radius: 16.5px;
+					position: relative;
+				}
+				.card {
+					positon: relative;
+					height: 60px;
+					width: 60px;
+					background-color: darkblue;
+					border-radius: 20px;
+					cursor: pointer;
+				}
+				.card:before {
+					height: 100%;
+					width: 100%;
+					position: absolute;
+					left: 0px;
+					top: 0px;
+					content: "";
+					border-radius: inherit;
+					z-index: 31;
+					background: radial-gradient(
+						800px circle at var(--mouse-x) var(--mouse-y),
+						rgba(255, 255, 255, 0.06),
+						transparent 40%
+					);
+					transition: opacity 500ms;
+					opacity: 0;
+				}
+				#appbar img, #appbar a {
+					z-index: 32;
+				}
+				.card:hover::before {
+					opacity: 1;
+				}
 	</style>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>[TRIAL] LabSim Globe by Aeonic</title>
+    <title>Neutron Globe</title>
     <link href="/style.css" rel="stylesheet" type="text/css" />
 
   </head>
   <body style='display: flex; width: 100%; height: 100%; flex-direction: column; overflow: hidden;'>
-    <script src="https://extend.ebp11.repl.co/script.js"></script>
-		<!-- SERVICE WORKER -->
+		<!-- Open the Global Settings -->
+		<button onclick='eToggle("personalise")' style='positon: fixed; top: 25px; right: 3px; border-radius: 6px; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none; width: 8px; z-index: 32;'><i class='fa fa-gears' style='color: white; filter: brightness(120%);'></i></button>
+		<!-- These are the places where apps open. -->
+		<iframe style='border: none; float: right; width: 99.9%;height: 100%; ' id='wbpopen' src='/v/' name='wpopen'>Researcher can't be opened</iframe>
+		<iframe style='border: none; float: right; width: 99.9%;height: 100%; ' id='wbpopen2' src='/demos/' name='wpopen2' class='e-hide'>Researcher can't be opened</iframe>
+    <!--This is a sidebar on the right where the apps (Sandbox and Arith) are displayed-->
+		<div id='appbar' ondblclick='eToggle("sidebar")'>
+			<br/>
+			<div class='card'><a href='/v/' target='wpopen'><img src='images/apple-touch-icon.png'/></a></div>
+			<br/>
+			<div class='card'><a href='/arith/' target='wpopen'><img src='images/arithlogo.png'/></a></div>
+			<br/>
+			<div class='card'><a href='//sentence.ebp11.repl.co/' target='wpopen'><img src='images/Sentence.png'/></a></div>
+		</div>
 		<script>
-    window.addEventListener('load', () => {
-      registerSW();
-    });
- 
-    // Register the Service Worker
-    async function registerSW() {
-      if ('serviceWorker' in navigator) {
-        try {
-          await navigator
-                .serviceWorker
-                .register('serviceworker.js');
-					console.log('BESTPENGUIN 777: Service worker loaded successfully!')
-        }
-        catch (e) {
-          console.log('BESTPENGUIN 989: Service worker unable to load! Reason: unspecified!');
-        }
-      }
-    }
- </script>
+			const handleOnMouseMove = e => {
+				const { currentTarget: target} = e;
+				const rect = target.getBoundingClientRect(),
+					x = e.clientX - rect.left,
+					y = e.clientY - rect.top;
+				target.style.setProperty("--mouse-x", `${x}px`);
+				target.style.setProperty("--mouse-y", `${y}px`);
+			}
+			for (const card of document.querySelectorAll(".card")) {
+				card.onmousemove = e => handleOnMouseMove(e);
+			}
+		</script>
+
+		
+
+		
 		<div id='status' style='background-image: linear-gradient(to bottom, white, lightblue, powderblue); opacity: 20%; width: 100%; height: 20px; position: fixed; top: 0; left: 0; float: right;'>
-			<button onclick='document.getElementById("personalise").style.display="block";' style='positon: fixed; top: 5px; border-radius: 6px; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none;'><i class='fa fa-gears'></i></button>
+			
 
 			<!--<a href='https://www.bing.com' target='wpopen' style='float: right;'><i class='fa fa-th-large' title='Bing'></i></a>
 			<a href='https://en.m.wikipedia.org/wiki/Main_page' target='wpopen' style='float: right;'><i class='fa fa-wikipedia' title='Wikipedia'></i></a>
@@ -484,10 +228,10 @@
 			
 		</div>
 		<br/><br/>
-		<div id='mobileMinimiser'><button onclick='document.getElementById("sidebar").style.display="none";document.getElementById("maxibtn").style.display="none";document.getElementById("minibtn").style.display="inline-block";' style='positon: fixed; top: 5px; border-radius: 50%; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none; width: auto; top: 20px; right: 2px; position: fixed;' id='maxibtn'>Maximise</button>
-			<button onclick='document.getElementById("sidebar").style.display="block";document.getElementById("maxibtn").style.display="inline-block";document.getElementById("minibtn").style.display="none";' style='fpositon: fixed; top: 5px; border-radius: 50%; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none;display:none;width: auto; top: 20px; right: 2px; position: fixed;' id='minibtn'>Minimise</button></div>
+		<div id='mobileMinimiser'><button onclick='document.getElementById("sidebar").style.display="none";document.getElementById("maxibtn").style.display="none";document.getElementById("minibtn").style.display="inline-block";eHide("appbar");eHide("status");' style='positon: fixed; top: 5px; border-radius: 50%; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none; width: auto; top: 20px; right: 30px; position: fixed;' id='maxibtn'>Maximise</button>
+			<button onclick='document.getElementById("sidebar").style.display="block";document.getElementById("maxibtn").style.display="inline-block";document.getElementById("minibtn").style.display="none";eShow("appbar");eShow("status");' style='fpositon: fixed; top: 5px; border-radius: 50%; background-image: linear-gradient(to bottom, black, silver, white); background-color: black;border: none;display:none;width: auto; top: 20px; right: 2px; position: fixed;' id='minibtn'>Minimise</button></div>
 		
-		<div id='sidebar'>
+		<div id='sidebar' ondblclick='eToggle("appbar)'>
 			
 			
 		<iframe style='height: 265px; display: block; width: 100%; border: none;' src='clock.html' id='clock' name='clockml'></iframe>
@@ -502,7 +246,7 @@
 		<iframe style='height: 220px; overflow: auto; width: 290px; border: none; display: none;' src='https://vivaldi-sidebar.ebp11.repl.co/gadgets/tnote.html' id='tscratchpad'></iframe>
 		<iframe style='height: 220px; overflow: auto; width: 290px; border: none; display: none;' src='/scinote.html' id='scinote'></iframe>
 		<iframe src='https://en.m.wikipedia.org/wiki/' id='embed' name='embedgadget' style='display: none; overflow: auto;'></iframe>
-		<div id='tabs'>
+		<div id='tabs' ondblclick='eToggle("appbar")'>
 			<span class='tooltiptext'>
 				<b onclick="eShow('wbpopen');eHide('wbpopen2');">Window One</b>
 			</span><br/>
@@ -512,27 +256,25 @@
 		</div>
 		</div>
 		
-		<iframe style='border: none; float: right; width: 99.9%;height: 100%; ' id='wbpopen' src='/v/' name='wpopen'>Researcher can't be opened</iframe>
-		<iframe style='border: none; float: right; width: 99.9%;height: 100%; ' id='wbpopen2' src='/demos/' name='wpopen2' class='e-hide'>Researcher can't be opened</iframe>
+		
 		<dialog id='personalise'>
-			<h2>LabSim Global Settings <b style='background-color: red; color: white;'>[<button onclick="eHide('personalise');">Close</button>]</b><br/></h2>
-			<div id='win1cust'>
+			<h2>Neutron Global Settings <b style='background-color: red; color: white;'>[<button onclick="eHide('personalise');">Close</button>]</b><br/></h2>
 				<p><strong>Version</strong>
-				<a href='/v/2.2/' ondblclick='window.open("/v/2.2/", "wpopen2");' target='wpopen' title='End of mainstream support: 15 November 2022, End of extended support: 15 December 2022'>Latest snapshot (2.2)</a>&bull;
-				<a href='/v/' ondblclick='window.open("/v/", "wpopen2");' target='wpopen'>Latest version</a>&bull;
-				<a href='/v/2.2/' ondblclck='window.open("/v/2.2/", "wpopen2");' target='wpopen' title='End of mainstream support: 25 October 2022, end of all support: 5 November 2022'>2.2</a>&bull;
+				<a href='/v/2.3/' ondblclick='window.open("/v/2.3/", "wpopen2");' target='wpopen' title='End of mainstream support: 15 November 2022, End of extended support: 15 December 2022'>Latest snapshot (2.3)</a>&bull;
+				<a href='/v/2.3' ondblclick='window.open("/v/", "wpopen2");' target='wpopen'>Latest version</a>&bull;
+				<a href='/v/2.2/' ondblclck='window.open("/v/2.2/", "wpopen2");' target='wpopen' title='End of mainstream support: 25 October 2022, end of all support: 5 November 2022'>2.2 (unsup.)</a>&bull;
 				<a href='/v/2.1/' ondblclck='window.open("/v/2.1/", "wpopen2");' target='wpopen' title='End of all support: 15 October 2022'>2.1 (ending soon)</a>&bull;
 				<a href='/v/2.0.1/' ondblclck='window.open("/v/2.0.1/", "wpopen2");' target='wpopen' title='End of all support: 25 September 2022'>2.0.1 (unsupported)</a>&bull;
-				<a href='/v/2.0/' target='wpopen' ondblclick='window.open("/v/2.0/", "wpopen2");' title='End of mainstream support: 15 October 2022, End of extended support: 15 November 2022'>2.0</a>&bull;
-				<a href='/v/1.6.1/' target='wpopen' ondblclick='window.open("/v/1.6.1/", "wpopen2");' title='End of mainstream support: 15 September 2022, End of extended support: 15 October 2022'>1.6.1</a>&bull;
+				<a href='/v/2.0/' target='wpopen' ondblclick='window.open("/v/2.0/", "wpopen2");' title='End of mainstream support: 15 October 2022, End of extended support: 25 October 2022'>2.0</a>&bull;
+				<a href='/v/1.6.1/' target='wpopen' ondblclick='window.open("/v/1.6.1/", "wpopen2");' title='End of mainstream support: 15 September 2022, End of extended support: 15 October 2022'>1.6.1 (unsup.)</a>&bull;
 				<a href='/v/1.6/' target='wpopen' ondblclick='window.open("/v/1.6/", "wpopen2");' title='End of all support: 15 September 2022'>1.6 (unsupported)</a>&bull;
-				<a href='/v/1.5/' target='wpopen' ondblclick='window.open("/v/1.5/", "wpopen2");'  title='End of mainstream support: 15 July 2022, End of extended support: 15 August 2022'>1.5 (unsupported)</a></p>
+				<a href='/v/1.5/' target='wpopen' ondblclick='window.open("/v/1.5/", "wpopen2");'  title='End of mainstream support: 15 July 2022, End of extended support: 15 August 2022'>1.5 (unsup.)</a></p>
 				<p><strong>Shortcuts</strong>
-				<a href='/demonstrations.html' target='wpopen' ondblclick='window.open("/demonstrations.html", "wpopen2");'>LabSim Demos</a>&bull;
+				<a href='/demonstrations.html' target='wpopen' ondblclick='window.open("/demonstrations.html", "wpopen2");'>Neutron Demos</a>&bull;
 				<a href='//sentence.ebp11.repl.co/' target='wpopen' ondblclick='window.open("https://sentence.ebp11.repl.co", "wpopen2");'>Endeavour Sentence</a>
 				<a href='//e11polanco.ebp11.repl.co/' target='wpopen' ondblclick='window.open("https://e11polanco.ebp11.repl.co", "wpopen2");'>Endeavour Polanco</a>
 				</p>
-			</div>
+			
 			
 			
 			<h2>Gadgets</h2>
@@ -557,7 +299,7 @@
 			<button onclick='document.getElementById("all").style.filter="brightness(50%)";'>1/2</button>
 			<button onclick='document.getElementById("all").style.filter="brightness(75%)";'>3/4</button>
 			<button onclick='document.getElementById("all").style.filter="brightness(100%)";'>1</button>
-			<button onclick='document.getElementById("all").style.filter="brightness(125%)";'>5/4</button>
+			<button onclick='document.getElementById("all").style.filterer="brightness(125%)";'>5/4</button>
 			<button onclick='document.getElementById("all").style.filter="brightness(150%)";'>3/2</button>
 			<button onclick='document.getElementById("all").style.filter="brightness(175%)";'>7/4</button>
 			<button onclick='document.getElementById("all").style.filter="brightness(200%)";'>2</button>
@@ -583,10 +325,32 @@
 			<button onclick='document.getElementById("all").style.filter="sepia(0%)";'>Off</button>
 			
 			<hr/>
-			<small>(C) 2023 the Aeonic Corporation; LabSim was created as a fork of R74N's <a href='https://sandboxels.r74n.com'>Sandboxels</a>.<br/>
-			Greetings from the Aeonic team of Eshaan Bhargav Patel, Aaron and Brenden D'Souza, Akhil Medasani and Pravar Gollamudi.
+			<small>(C) 2023 the Aeonic Corporation; the LabSim sandbox was created as a fork of R74N's <a href='https://sandboxels.r74n.com'>Sandboxels</a>.<br/>
+			Greetings from the Aeonic team of Eshaan Bhargav Patel, Aaron and Brenden D'Souza, and Pravar Gollamudi.
 			</small>
 		</dialog>
+				<script src="https://extend.ebp11.repl.co/script.js"></script>
+				<!-- SERVICE WORKER -->
+				<script>
+		    window.addEventListener('load', () => {
+		      registerSW();
+		    });
+		 
+		    // Register the Service Worker
+		    async function registerSW() {
+		      if ('serviceWorker' in navigator) {
+		        try {
+		          await navigator
+		                .serviceWorker
+		                .register('serviceworker.js');
+							console.log('BESTPENGUIN 777: Service worker loaded successfully!')
+		        }
+		        catch (e) {
+		          console.log('BESTPENGUIN 989: Service worker unable to load! Reason: unspecified!');
+		        }
+		      }
+		    }
+		 </script>
   </body>
 </html>
 <!--<!DOCTYPE html>
@@ -596,7 +360,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>ProBoxels Mod</title>
-	<link href="https://labsim.ebp11.repl.co/style.css" rel="stylesheet" type="text/css" />
+	<link href="https://Neutron.ebp11.repl.co/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>

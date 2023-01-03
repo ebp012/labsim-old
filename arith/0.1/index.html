@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Neutron Arith (alpha 0.1)</title>
+		<style>
+			* {
+				font-family: futura;
+				color: white;
+			}
+			button, input {
+				background-color: black;
+				border: 1px inset white;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<a href='/converter'><button>Converter</button></a>
+			<p>Solve for X.</p>
+			<p id='equation'></p>
+			<p id='answer'></p>w
+			<input type='number' id='levelzone' placeholder='Enter a level..' min='-1' max='255' style='width: 91px;'/> • <button onclick='loadLevel();'>Generate</button> • <button onclick='getAnswer();'>Show answer</button>
+		</center>
+		<script>
+			var solvedAnswer;
+			function loadLevel() {
+				var xxx = document.getElementById("levelzone").value;
+				if (xxx <= 1) {
+					randEquation();
+				}
+				else if (xxx == 2) {
+					randEquationL2();
+				}
+				else {
+					console.log("BestPenguin 989: Invalid numerical value entered!")
+				}
+			}
+			// Level 1 - just solve a simple equation and fill in the blank
+			function randEquation () {
+				var x;
+				var num1 = Math.floor(Math.random() * 11);
+				var num2 = Math.floor(Math.random() * 9);
+				var num3 = Math.floor(Math.random() * 13);
+				var operation1 = Math.floor(Math.random() * 6);
+				var operval1;
+				var operation2 = Math.floor(Math.random() * 6);
+				var operval2;
+				var finalEquation;
+				// Decide Firts Operation
+				if (operation1 == 1 || operation1 == 0) {
+					operval1 = " + ";
+				}
+				else if (operation1 == 2) {
+					operval1 = " - ";
+				}
+				else if (operation1 >= 4) {
+					operval1 = " • "
+				}
+				else if (operation1 == 3) {
+					operval = " / ";
+				}
+				else {
+					operval = " - 14.5 + "
+					console.log("BestPenguin 989: Initial Mathematical Operation Undecideable! Defaulting to 'a-14.5+b'!")
+				}
+				// Decide Second Operation
+				if (operation2 <= 1) {
+					operval2 = " + ";
+				}
+				else if (operation2 == 2) {
+					operval2 = " - ";
+				}
+				else if (operation2 >= 4) {
+					operval2 = " • "
+				}
+				else if (operation2 == 3) {
+					operval2 = " / ";
+				}
+				else {
+					operval2 = " + 14.5"
+					console.log("BestPenguin 989: Subservient Mathematical Operation Undecideable!")
+				}
+				var equationSpace = document.getElementById("equation");
+				var num1x = num1.toString();
+				var num2x = num2.toString();
+				var num3x = num3.toString();
+				var finalEquation = num1x + operval1 + num2x + operval2 + num3x;
+				equationSpace.innerText = finalEquation;
+				var eqp1;
+				var solvedAnswer;
+				if (operation1 == 1 || operation1 == 0) {
+					eqp1 = num1 + num2;
+				}
+				else if (operation1 == 2) {
+					eqp1 = num1 - num2;
+				}
+				else if (operation1 == 3) {
+					eqp1 = num1 * num2;
+				}
+				else if (operation1 >= 4) {
+					eqp1 = num1 / num2;
+				}
+				else {
+					console.log("BestPenguin 989: Initial Mathematical Equation Unsolveable!")
+				}
+				
+				if (operation2 == 1 || operation2 == 0) {
+					solvedAnswer = eqp1 + num3;
+				}
+				else if (operation2 == 2) {
+					solvedAnswer = eqp1 - num3;
+				}
+				else if (operation2 == 3) {
+					solvedAnswer = eqp1 * num3;
+				}
+				else if (operation2 >= 4) {
+					solvedAnswer = eqp1 / num3;
+				}
+				else {
+					console.log("BestPenguin 989: Subservient Mathematical Equation Unsolveable!")
+				}
+			}
+
+			// Level 2 - the x is somewhere in the middle
+			function randEquationL2 () {
+				var x;
+				var num1 = Math.floor(Math.random() * 11);
+				var num2 = Math.floor(Math.random() * 9);
+				var num3 = Math.floor(Math.random() * 13);
+				var operation1 = Math.floor(Math.random() * 6);
+				var operval1;
+				var operation2 = Math.floor(Math.random() * 6);
+				var operval2;
+				var finalEquation;
+				// Decide Firts Operation
+				if (operation1 <= 1) {
+					operval1 = " + ";
+				}
+				else if (operation1 == 2) {
+					operval1 = " - ";
+				}
+				else if (operation1 >= 4) {
+					operval1 = " • "
+				}
+				else if (operation1 == 3) {
+					operval = " / ";
+				}
+				else {
+					console.log("BestPenguin 989: Initial Mathematical Operation Undecideable!")
+				}
+				// Decide Second Operation
+				if (operation2 <= 1) {
+					operval2 = " + ";
+				}
+				else if (operation2 == 2) {
+					operval2 = " - ";
+				}
+				else if (operation2 >= 4) {
+					operval2 = " • "
+				}
+				else if (operation2 == 3) {
+					operval2 = " / ";
+				}
+				else {
+					console.log("BestPenguin 989: Subservient Mathematical Operation Undecideable!")
+				}
+				var equationSpace = document.getElementById("equation");
+				var num1x = num1.toString();
+				var num2x = num2.toString();
+				var num3x = num3.toString();
+				finalEquation = num3x + " = " + num1x + operval1 + "x" + operval2 + num2x;
+				equationSpace.innerText = finalEquation;
+				solvedAnswer = num3 + num2 + num1;
+			}
+			function getAnswer(){
+				document.getElementById("answer").innerText = solvedAnswer;
+			}
+		</script>
+	</body>
+</html>

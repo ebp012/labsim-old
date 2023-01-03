@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -39,7 +40,7 @@
     <meta name="keywords" content="falling sand, elements, pixel art, simulator, powder, dangerous, nfca, lab, online lab">
     <meta name="author" content="ebp049X">
     <meta name="copyright" content="R74n"><!--This is just a fork-->
-    <link href="https://fonts.googleapis.com/css?family=Verdana" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Futura" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all">
 		<meta name="theme-color" content="#000027" id='okok'>
@@ -152,7 +153,7 @@
             }
         }
     </script>
-		<center><p style="height: 20px; font-family: verdana; font-weight: bolder;"><img src="https://labsim.ebp11.repl.co/images/oldlogo.png" style="height: 20px; width: 20px;"/>
+		<center><p style="height: 20px; font-family: futura; font-weight: bolder;"><img src="https://labsim.ebp11.repl.co/images/oldlogo.png" style="height: 20px; width: 20px;"/>
 			<span id='logobox'>LabSim</span><style>body,html,p,button,*{font-family: nuevosans;}</style></center>
 			
 		</p>
@@ -194,44 +195,6 @@
                 "M2|XX|M2",
                 "M1|M1|M1",
             ],
-            LIQUID_OLD: function(pixel) {
-                if (pixel.start === pixelTicks) {return}
-                if (pixel.charge && elements[pixel.element].behaviorOn) {
-                    pixelTick(pixel)
-                }
-                if (elements[pixel.element].viscosity && (!((Math.random()*100) < 100 / ((elements[pixel.element].viscosity) ** 0.25)))) {
-                    var move1Spots = [
-                        [pixel.x, pixel.y+1]
-                    ]
-                }
-                else {
-                    var move1Spots = [
-                        [pixel.x+1, pixel.y+1],
-                        [pixel.x, pixel.y+1],
-                        [pixel.x-1, pixel.y+1],
-                    ]
-                }
-                var moved = false;
-                for (var i = 0; i < move1Spots.length; i++) {
-                    var coords = move1Spots[Math.floor(Math.random()*move1Spots.length)];
-                    if (tryMove(pixel, coords[0], coords[1])) { moved = true; break; }
-                    else { move1Spots.splice(move1Spots.indexOf(coords), 1); }
-                }
-                if (!moved) {
-                    if (elements[pixel.element].viscosity===undefined || !(!((Math.random()*100) < 100 / ((elements[pixel.element].viscosity) ** 0.25)))) {
-                        if (Math.random() < 0.5) {
-                            if (!tryMove(pixel, pixel.x+1, pixel.y)) {
-                                tryMove(pixel, pixel.x-1, pixel.y);
-                            }
-                        } else {
-                            if (!tryMove(pixel, pixel.x-1, pixel.y)) {
-                                tryMove(pixel, pixel.x+1, pixel.y);
-                            }
-                        }
-                    }
-                }
-                doDefaults(pixel);
-            },
             SLIDE: [
                 "XX|XX|XX",
                 "XX|XX|M2 AND BO",
@@ -242,12 +205,12 @@
 						    "M1|XX|M1 AND M2 AND BO",
 						    "M1|M1|M1 AND M2",
             ],
-						GAS: [
+						VAPOUR: [
                 "M2|M1|M2",
                 "M1|XX|M1",
                 "M2|M1|M2",
             ],
-            GAS_OLD: function(pixel) {
+            VAPOUR_OLD: function(pixel) {
                 if (pixel.start === pixelTicks) {return}
                 if (pixel.charge && elements[pixel.element].behaviorOn) {
                     pixelTick(pixel)
@@ -498,7 +461,7 @@
                 "M2 AND CR:radiation%2|XX|M2 AND CR:radiation%2",
                 "M1|M1|M1",
             ],
-						RADIOACTIVE_GAS: [
+						RADIOACTIVE_VAPOUR: [
 								"M2|M1 AND CR:neutron%0.01|M2",
 								"M1 AND CR:neutron%0.01|DL%0.01|M1 AND CR:neutron%0.01",
 								"M2|M1 AND CR:neutron%0.01|M2", 
@@ -590,7 +553,7 @@
                 insulate:true,
             },
 						
-            "erase": { //hard-coded
+            "eraser": { //hard-coded
                 color: "#fdb5ff",
                 behavior: [
                     "DL|DL|DL",
@@ -599,6 +562,7 @@
                 ],
                 category: "tools",
             },
+						
             "pick": { //hard-coded
                 color: ["#fa9b9b","#fae99b","#9bfab7","#9b9dfa"],
                 behavior: [
@@ -1287,7 +1251,7 @@
             },
             "steam": {
                 color: "#abd6ff",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "steam": { "elem1": null, "elem2": "rain_cloud", "chance":0.3, "y":[0,15] },
                     "rain_cloud": { "elem1": "rain_cloud", "chance":0.4, "y":[0,15] },
@@ -1306,7 +1270,7 @@
             },
 						"radon": {
                 color: "#E1E7FC",
-                behavior: behaviors.RADIOACTIVE_GAS,
+                behavior: behaviors.RADIOACTIVE_VAPOUR,
                 reactions: {
                     "radonic_ice": { "elem1": null, "elem2": "radiation", "chance":0.7 },
 										"liquid_radon": { "elem1": null, "elem2": "radiation", "chance":0.7 },
@@ -1379,6 +1343,18 @@
                 state: "solid",
                 density: 917,
                 breakInto: "snow",
+            },
+						"eraser": { //hard-coded
+                color: "#fdb5ff",
+                behavior: [
+                    "DL|DL|DL",
+                    "DL|XX|DL",
+                    "DL|DL AND M1|DL",
+                ],
+                category: "solids",
+								stateHigh: "molten_plastic",
+								tempHigh: 148,
+								state:"solid",
             },
 						"color_ice": {
                 color: ["#ff4d4d","#ffac4d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff", "#2167ff", "#2167ff", "#2167ff"],
@@ -1486,7 +1462,7 @@
 								customColor: true,
 								temp: 0,
                 stateHigh: "color_water",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 400,
             },
@@ -1593,6 +1569,32 @@
                 hardness: 0.15,
                 breakInto: "sawdust",
             },
+						"tomato_stem": {
+                color: "#02BE50",
+                behavior: behaviors.STURDYPOWDER,
+                tempHigh: 400,
+                stateHigh: ["ember", "ketchup_gas"],
+                category: "solids",
+                burn: 5,
+                burnTime: 300,
+                burnInto: ["ember", "ketchup_gas"],
+                state: "solid",
+                hardness: 0.15,
+                breakInto: "sawdust",
+            },
+					"watermelon_vine": {
+                color: "#0EBF02",
+                behavior: behaviors.STURDYPOWDER,
+                tempHigh: 400,
+                stateHigh: ["ember", "juice"],
+                category: "solids",
+                burn: 5,
+                burnTime: 300,
+                burnInto: ["ember", "juice"],
+                state: "solid",
+                hardness: 0.15,
+                breakInto: "sawdust",
+            },
 					"clarinet": {
                 color: "#112213",
                 behavior: behaviors.SUPPORT,
@@ -1662,7 +1664,7 @@
             },
 						"lavagas": {
                 color: ["#ff6f01","#ef8c00","#ff4d00"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "ice": { "elem1": "magma" },
                 },
@@ -1678,7 +1680,7 @@
             },
 						"impure_lavagas": {
                 color: ["#ff6f01","#808080","#ef8c00","#ff4d00"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "ice": { "elem1": "impure_magma" },
                 },
@@ -1696,7 +1698,7 @@
             },
             "plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1716,7 +1718,7 @@
             },
 						"graviton": {
                 color: "#4C515B",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1727,7 +1729,7 @@
             },
 						"gluon": {
                 color: "#8932b7",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1749,7 +1751,7 @@
             },
 						"quark_plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1765,7 +1767,7 @@
             },
 						"antiquark_plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1779,9 +1781,21 @@
                 state: "gas",
                 density: 1,
             },
+						"antieraser": { //hard-coded
+                color: "#fdb5ff",
+                behavior: [
+                    "DL|DL AND M1|DL",
+                    "DL|XX|DL",
+                    "DL|DL|DL",
+                ],
+                category: "antimatter",
+								stateHigh: "antimolten_plastic",
+								tempHigh: 148,
+								state:"solid",
+            },
 						"up_quark": {
                 color: "#FFD5A9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "energy",
                 state: "gas",
 								charge: 0.333,
@@ -1789,7 +1803,7 @@
             },
 						"down_quark": {
                 color: "#FFB29C",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1907,7 +1921,7 @@
             },
 						"antiup_quark": {
                 color: "#FFD5A9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "antimatter",
                 state: "gas",
 								charge: 0.333,
@@ -1915,7 +1929,7 @@
             },
 						"antidown_quark": {
                 color: "#FFB29C",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1979,7 +1993,7 @@
             },
 						"antiplasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -2165,7 +2179,7 @@
                 behavior: behaviors.STURDYPOWDER,
                 tempHigh: 31,
                 stateHigh: "chocolate_syrup",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1325,
             },
@@ -2411,7 +2425,7 @@
             },
             "plague": {
                 color: "#36005c",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "frog": { "elem2":"plague", "chance":0.05 },
                     "ant": { "elem2":"plague", "chance":0.05 },
@@ -2691,7 +2705,7 @@
             },
 						"human_meat": {
                 color: ["#f5eac6","#d4c594","#a89160","#7a5733","#523018","#361e0e"],
-                category: "food",
+                category: "edible",
 								temp: 39,
                 properties: {
                     dead: true,
@@ -3908,7 +3922,7 @@ elements.move_right = {
             },
             "hydrogen": {
                 color: "#558bcf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"steam" },
 										"neutron": {"elem1":null, "elem2":"deuterium" },
@@ -3943,7 +3957,7 @@ elements.move_right = {
 						"negative_hydrogen": {
                 color: "#558bcf",
 								name: 'Hydrogen anion',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"steam" },
 										"neutron": {"elem1":null, "elem2":"deuterium" },
@@ -3960,7 +3974,7 @@ elements.move_right = {
             },
 						"positive_helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
 								name: 'Helium cation',
@@ -3974,7 +3988,7 @@ elements.move_right = {
             },
 						"negative_helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
 								name: 'Helium anion',
@@ -4037,7 +4051,7 @@ elements.move_right = {
             },
             "oxygen": {
                 color: "#000000",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "copper": { "elem2":"oxidized_copper", chance:0.05 },
                     "iron": { "elem2":"rust", chance:0.025 },
@@ -4059,7 +4073,7 @@ elements.move_right = {
             "nitrogen": {
 								name: "Nitrogen",
                 color: "#b8d1d4",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"anesthesia" },
                     "hydrogen": { "elem1":null, "elem2":"ammonia" },
@@ -4072,7 +4086,7 @@ elements.move_right = {
             },
             "helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4088,7 +4102,7 @@ elements.move_right = {
 						"helium_5": {
                 color: "#a69494",
 								name: 'Helium-5',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4103,7 +4117,7 @@ elements.move_right = {
 						"negative_helium_5": {
                 color: "#a69494",
 								name: 'Helium-5 Anion',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4130,7 +4144,7 @@ elements.move_right = {
 						},
             "anesthesia": {
                 color: "#d3e1e3",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -88.48,
                 stateLow: ["nitrogen","oxygen"],
@@ -4140,7 +4154,7 @@ elements.move_right = {
             },
             "ammonia": {
                 color: "#bab6a9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "methane": { "elem1":null, "elem2":"cyanide", "chance":0.25 },
                     "plant": { "elem1":"plant", "chance":0.05 },
@@ -4237,7 +4251,7 @@ elements.move_right = {
                 tempHigh: 10,
 								stateHigh: "ammoniadesertcloud",
 								stateLow: "liquidammonia",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -4276,13 +4290,13 @@ elements.move_right = {
                 tempHigh: 50,
 								stateHigh: "ammonia",
 								stateLow: "liquidammonia",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
             "carbon_dioxide": {
                 color: "#2f2f2f",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "plant": { "elem1":"oxygen" },
                     "algae": { "elem1":"oxygen" },
@@ -4326,7 +4340,7 @@ elements.move_right = {
             },
             "propane": {
                 color: "#bfbfbf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4386,7 +4400,7 @@ elements.move_right = {
             },
 						"butane": {
                 color: "#cfcfcf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4429,7 +4443,7 @@ elements.move_right = {
             },
             "methane": {
                 color: "#9f9f9f",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4471,7 +4485,7 @@ elements.move_right = {
             },
 						"ethane": {
                 color: "#afafaf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4871,6 +4885,58 @@ elements.move_right = {
                 state: "solid",
                 density: 1500,
             },
+						"tomato_sapling": {
+                color: "#432721",
+                behavior: [
+                    "XX|M2%2|XX",
+                    "XX|L2:tomato_stem,tomato_leaves,tomato%80|XX",
+                    "XX|M1|XX",
+                ],
+								reactions: {
+                    "dirt": { "elem1":null, "elem2":"apple_root" },
+										"clay_soil": { "elem1":null, "elem2":"apple_root" },
+										"substratum": { "elem1":null, "elem2":"apple_root" },
+										"ash": { "elem1":null, "elem2":"apple_root" },
+										"mud": { "elem1":null, "elem2":"apple_root" },
+										"frozen_dirt": { "elem1":null, "elem2":"seed" },
+										"milk": { "elem1":null, "elem2":"dead_plant" },
+                },
+                tempHigh: 100,
+                stateHigh: "dead_plant",
+                tempLow: -2,
+                stateLow: "frozen_plant",
+                burn: 65,
+                burnTime: 15,
+                category: "life",
+                state: "solid",
+                density: 1500,
+            },
+						"watermelon_sapling": {
+                color: "#03FC5A",
+                behavior: [
+                    "XX|M2%2|XX",
+                    "XX|L2:watermelon_vine,watermelon_leaves,watermelon%80|XX",
+                    "XX|M1|XX",
+                ],
+								reactions: {
+                    "dirt": { "elem1":null, "elem2":"apple_root" },
+										"clay_soil": { "elem1":null, "elem2":"apple_root" },
+										"substratum": { "elem1":null, "elem2":"apple_root" },
+										"ash": { "elem1":null, "elem2":"apple_root" },
+										"mud": { "elem1":null, "elem2":"apple_root" },
+										"frozen_dirt": { "elem1":null, "elem2":"seed" },
+										"milk": { "elem1":null, "elem2":"dead_plant" },
+                },
+                tempHigh: 100,
+                stateHigh: "dead_plant",
+                tempLow: -2,
+                stateLow: "frozen_plant",
+                burn: 65,
+                burnTime: 15,
+                category: "life",
+                state: "solid",
+                density: 1500,
+            },
             "seeds": {
                 color: ["#359100","#74b332","#b9d461","#dede7a"],
                 tick: function(pixel) { 
@@ -5251,6 +5317,66 @@ elements.move_right = {
                 hardness: 0.15,
                 breakInto: ["cyanide","sawdust"],
             },
+						"tomato_leaves": {
+                color: "#04DB53",
+                behavior: [
+                    "CR:plant,tomato,tomato_leaves%2|CR:plant,tomato,plant,tomato,plant,tomato,tomato_leaves%2|CR:plant,tomato_leaves%2",
+                    "XX|XX|XX",
+                    "XX|XX|XX",
+                ],
+								reactions: {
+                    "dirt": { "elem1":null, "elem2":"root" },
+										"clay_soil": { "elem1":null, "elem2":"root" },
+										"substratum": { "elem1":null, "elem2":"root" },
+										"ash": { "elem1":null, "elem2":"root" },
+										"mud": { "elem1":null, "elem2":"root" },
+										"frozen_dirt": { "elem1":null, "elem2":"oak_sapling" },
+										"milk": { "elem1":null, "elem2":"dead_plant" },
+                },
+                tempHigh: 400,
+                stateHigh: ["fire","cyanide"],
+                tempLow: -30,
+                stateLow: "apple_wood",
+                category: "solids",
+                burn: 40,
+                burnTime: 50,
+                burnInto: ["cyanide","ember","charcoal"],
+                hidden: true,
+                state: "solid",
+                density: 1500,
+                hardness: 0.15,
+                breakInto: ["cyanide","sawdust"],
+            },
+						"watermelon_leaves": {
+                color: "#04DB53",
+                behavior: [
+                    "CR:plant,watermelon,watermelon_leaves%2|CR:plant,watermelon,plant,watermeon,plant,watermelon,watermelon_leaves%2|CR:plant,watermelon_leaves%2",
+                    "XX|XX|XX",
+                    "XX|XX|XX",
+                ],
+								reactions: {
+                    "dirt": { "elem1":null, "elem2":"root" },
+										"clay_soil": { "elem1":null, "elem2":"root" },
+										"substratum": { "elem1":null, "elem2":"root" },
+										"ash": { "elem1":null, "elem2":"root" },
+										"mud": { "elem1":null, "elem2":"root" },
+										"frozen_dirt": { "elem1":null, "elem2":"oak_sapling" },
+										"milk": { "elem1":null, "elem2":"dead_plant" },
+                },
+                tempHigh: 400,
+                stateHigh: ["fire","cyanide"],
+                tempLow: -30,
+                stateLow: "apple_wood",
+                category: "solids",
+                burn: 40,
+                burnTime: 50,
+                burnInto: ["cyanide","ember","charcoal"],
+                hidden: true,
+                state: "solid",
+                density: 1500,
+                hardness: 0.15,
+                breakInto: ["cyanide","sawdust"],
+            },
             "vine": {
                 color: "#005900",
                 behavior: [
@@ -5571,7 +5697,7 @@ elements.move_right = {
                 "M2|XX|M2",
                 "M1|M1|M1",
             ],
-						GAS: [
+						VAPOUR: [
                 "M2|M1|M2",
                 "M1|XX|M1",
                 "M2|M1|M2",
@@ -5632,7 +5758,7 @@ elements.move_right = {
                 behavior: behaviors.STURDYPOWDER,
                 tempHigh: 54,
                 stateHigh: "melted_cheese",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1153,
             },
@@ -5808,16 +5934,46 @@ elements.move_right = {
                 state: "solid",
                 density: 1052,
             },
+						"antiplastic": {
+                color: "#c5dede",
+                behavior: behaviors.AGPOWDER,
+                tempHigh: 250,
+                burn: 10,
+                burnTime: 200,
+                burnInto: "dioxin",
+                category: "antimatter",
+                state: "solid",
+                density: 1052,
+            },
+						"styrofoam": {
+                color: "#c5dede",
+                behavior: behaviors.POWDER,
+                tempHigh: 250,
+								stateHigh: "molten_plastic",
+                burn: 10,
+                burnTime: 200,
+                burnInto: "dioxin",
+                category: "solids",
+                state: "solid",
+                density: 1052,
+            },
             "molten_plastic": {
                 color: "#a4b3b3",
                 behavior: behaviors.LIQUID,
                 viscosity: 20,
+								category: "liquids",
+            },
+						"antimolten_plastic": {
+                color: "#a4b3b3",
+                behavior: behaviors.AGLIQUID,
+                viscosity: 20,
+								category: "antimatter",
             },
             "paper": {
                 color: "#f0f0f0",
-                behavior: behaviors.STURDYPOWDER,
+                behavior: behaviors.WALL,
                 reactions: {
-                    "water": { "elem1":"cellulose", "elem2":null },
+                    "water": { "elem1":"wet_paper", "elem2":null },
                     "dirty_water": { "elem1":"cellulose", "elem2":null },
                     "salt_water": { "elem1":"cellulose", "elem2":null },
                     "sugar_water": { "elem1":"cellulose", "elem2":null },
@@ -5837,8 +5993,91 @@ elements.move_right = {
                 category: "powders",
                 state: "solid",
                 density: 1201,
+								atoms: "cellulose"
             },
-						
+						"wet_paper": {
+                color: "#d0d0d0",
+                behavior: behaviors.STURDYPOWDER,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"wet_paper", "elem2":null },
+										"plastic": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+                burnTime: 300,
+                category: "powders",
+                state: "solid",
+                density: 1201,
+            },
+						"plaster": {
+                color: "#f2f2f2",
+                behavior: behaviors.POWDER,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"plaster_dried", "elem2":null },
+										"wet_paper": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+								name: "Plaster of Paris",
+                burnTime: 300,
+                category: "powders",
+                state: "solid",
+                density: 1201,
+            },
+						"plaster_dried": {
+                color: "#f2f2f2",
+                behavior: behaviors.SUPPORT,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"plaster_dried", "elem2":null },
+										"wet_paper": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+								name: "Plaster of Paris",
+                burnTime: 300,
+                category: "special",
+                state: "solid",
+                density: 1201,
+            },
             "cellulose": {
                 color: "#c7d4c9",
                 behavior: behaviors.LIQUID,
@@ -5899,7 +6138,7 @@ elements.move_right = {
             },
             "dioxin": {
                 color: "#b8b8b8",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "cell": { "elem2":"cancer", "chance":0.0015 },
                     "blood": { "elem2":"infection", "chance":0.01 },
@@ -6000,7 +6239,7 @@ elements.move_right = {
             },*/
 						/*"iron_vapor": {
                 color: "#f9801d"
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "steam": { "elem1":"rust", chance:0.0025 },
                     "salt_water": { "elem1":"rust", chance:0.005 },
@@ -6176,7 +6415,7 @@ elements.move_right = {
             },
 						"gold_vapor": {
                 color: "#F0BB62",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 2970,
 								temp: 3000,
                 category: "vapours",
@@ -6274,7 +6513,7 @@ elements.move_right = {
             },
 						"bismuth_vapor": {
                 color: "#9d6c6a",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1564,
 								tempHigh: 8500,
 								temp: 1600,
@@ -6300,7 +6539,7 @@ elements.move_right = {
             },
 						"lead_vapor": {
                 color: "#ad6c6a",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1750,
 								tempHigh: 10000,
 								temp: 1800,
@@ -6354,7 +6593,7 @@ elements.move_right = {
             },
 						"tungsten_vapor": {
                 color: ['#ffff67', '#c44300'],
-								behavior: behaviors.GAS,
+								behavior: behaviors.VAPOUR,
 								tempHigh: 15000,
 								state: "gas",
 								density: 15000,
@@ -6473,7 +6712,7 @@ elements.move_right = {
             },
 						"bronze_gas": {
                 color: "#ee7f32",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1273,
 								temp: 1275,
 								tempHigh: 5000,
@@ -6560,7 +6799,7 @@ elements.move_right = {
 						"steel_vapor": {
                 color: "#71797E",
 								temp: 3000,
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
 								state: "gas",
                 tempHigh: 5000,
 								tempLow: 2700,
@@ -6653,7 +6892,7 @@ elements.move_right = {
             },
 					"gallium_vapor": {
                 color: "#E0DEDE",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 /*reactions: {
                     "gold": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
                     "zinc": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
@@ -6670,7 +6909,7 @@ elements.move_right = {
                 tempHigh: 50000,
 								stateHigh: "plasma",
 								stateLow: "liquid_gallium",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 6.095,
             },
@@ -6767,7 +7006,7 @@ elements.move_right = {
             },
 						"mercury_vapor": {
                 color: ["#53574B","#65686A"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "gold": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
                     "zinc": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
@@ -6785,7 +7024,7 @@ elements.move_right = {
                 tempHigh: 5000,
 								stateHigh: "plasma",
 								stateLow: "mercury",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6813,7 +7052,7 @@ elements.move_right = {
                 tempHigh: 370,
 								stateHigh: "mercury_vapor",
 								//stateLow: "mercury_snowcloud",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6841,7 +7080,7 @@ elements.move_right = {
                 tempHigh: 10,
 								stateHigh: "mercury_cloud",
 								stateLow: "mercury_graupelcloud",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6869,7 +7108,7 @@ elements.move_right = {
                 tempLoe: -100,
 								stateHigh: "mercury_snowcloud",
 								stateLow: "solid_mercury",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -7043,7 +7282,7 @@ elements.move_right = {
                     "stench": { "elem1":null, "elem2":null },
                     "yeast": { "elem2":null, "chance":0.1 },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: -37.5,
                 tempLow: -112,
                 stateLow: "liquid_ozone",
@@ -7076,7 +7315,7 @@ elements.move_right = {
                 reactions: {
                     "oxozone": { "elem1":null, "elem2":"radiation", "chance":0.05 },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: -37.5,
                 tempLow: -112,
                 stateLow: "liquid_ozone",
@@ -7155,7 +7394,7 @@ elements.move_right = {
             },
 						"pasteurised_milk": {
                 color: "#fafafa",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
 								tempLow: 100,
 								stateLow: "milk",
 								temp: 110,
@@ -7168,7 +7407,7 @@ elements.move_right = {
                 color: "#f0efe6",
 								name: 'Yoghurt',
                 behavior: behaviors.STURDYPOWDER,
-                category: "food",
+                category: "edible",
                 state: "liquid",
 								tempLow: 5,
 								stateLow: "frozen_yogurt",
@@ -7183,7 +7422,7 @@ elements.move_right = {
                 color: "#f0efe6",
 								name: 'Frozen Yoghurt',
                 behavior: behaviors.SUPPORTPOWDER,
-                category: "food",
+                category: "edible",
                 state: "liquid",
 								tempHigh: 5,
 								tempLow: -20,
@@ -7216,7 +7455,7 @@ elements.move_right = {
                 },
                 tempHigh: 256,
                 stateHigh: "steam",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1154,
                 breakInto: "juice",
@@ -7238,7 +7477,7 @@ elements.move_right = {
                 },
                 tempHigh: 256,
                 stateHigh: "steam",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1154,
                 breakInto: "juice",
@@ -7260,7 +7499,7 @@ elements.move_right = {
                 },
                 tempHigh: 256,
                 stateHigh: "steam",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1154,
                 breakInto: "juice",
@@ -7341,7 +7580,7 @@ elements.move_right = {
                 burn: 50,
                 burnTime: 20,
                 burnInto: "ash",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 1180,
             },
@@ -7355,7 +7594,7 @@ elements.move_right = {
 										"fire": { "elem1": null, "elem2": "popcorn" },
 										"heat": { "elem1": null, "elem2": "popcorn" },
                 },
-                category: "food",
+                category: "edible",
                 burn: 10,
                 burnTime: 200,
                 tempHigh: 180,
@@ -7366,7 +7605,7 @@ elements.move_right = {
             "popcorn": {
                 color: ["#a6a076","#ebe4ab","#ebe4ab","#ebe4ab","#ebe4ab","#ebe4ab","#ebe4ab","#c99947"],
                 behavior: behaviors.STURDYPOWDER,
-                category: "food",
+                category: "edible",
                 tempHigh: 500,
                 stateHigh: "ash",
                 burn: 20,
@@ -7413,7 +7652,7 @@ elements.move_right = {
                 burn: 50,
                 burnTime: 20,
                 burnInto: "ash",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 675,
             },
@@ -7425,7 +7664,17 @@ elements.move_right = {
                 burn: 50,
                 burnTime: 20,
                 burnInto: "ash",
-                category: "food",
+                category: "edible",
+                state: "solid",
+                density: 675,
+            },
+						"almond_butter": {
+                color: "#a66933",
+                behavior: behaviors.STURDYPOWDER,
+                burn: 50,
+                burnTime: 20,
+                burnInto: "ash",
+                category: "edible",
                 state: "solid",
                 density: 675,
             },
@@ -7437,8 +7686,20 @@ elements.move_right = {
                 burn: 50,
                 burnTime: 20,
                 burnInto: "ash",
-                category: "food",
+                category: "edible",
                 state: "solid",
+                density: 675,
+            },
+						"almond_milk": {
+                color: "#efefdf",
+                behavior: behaviors.LIQUID,
+                tempHigh: 400,
+                stateHigh: "ash",
+                burn: 50,
+                burnTime: 20,
+                burnInto: "ash",
+                category: "edible",
+                state: "liquid",
                 density: 675,
             },
 						"food_processor": {
@@ -7610,7 +7871,7 @@ elements.move_right = {
                 behavior: behaviors.STURDYPOWDER,
                 tempHigh: 176,
                 stateHigh: "toast",
-                category: "food",
+                category: "edible",
                 burn: 30,
                 burnTime: 200,
                 burnInto: "ash",
@@ -7622,7 +7883,7 @@ elements.move_right = {
                 behavior: behaviors.STURDYPOWDER,
                 tempHigh: 500,
                 stateHigh: "ash",
-                category: "food",
+                category: "edible",
                 burn: 50,
                 burnTime: 170,
                 burnInto: "ash",
@@ -7646,7 +7907,7 @@ elements.move_right = {
             "dough": {
                 color: "#EDD8BA",
                 behavior: behaviors.SUPPORT,
-                category: "food",
+                category: "edible",
                 tempHigh: 94,
                 stateHigh: "bread",
                 burn:40,
@@ -7698,7 +7959,7 @@ elements.move_right = {
                 behavior: behaviors.STURDYPOWDER,
                 tempHigh: 186,
                 stateHigh: "caramel",
-                category: "food",
+                category: "edible",
                 state: "solid",
                 density: 900,
             },
@@ -7744,7 +8005,7 @@ elements.move_right = {
             },
 						/*"alcohol_gas": {
                 color: "#c9c5b1",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "virus": { "elem2":null },
                     "plague": { "elem2":null },
@@ -7855,7 +8116,7 @@ elements.move_right = {
             },
             "chlorine": {
                 color: "#A5AC50",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "water": { "elem1": "acid", "elem2":null },
                     "steam": { "elem1": "acid_gas", "elem2":null },
@@ -7864,7 +8125,7 @@ elements.move_right = {
                 tempLow: -36.04,
                 stateLow: "liquid_chlorine",
                 state: "gas",
-                category:"gases",
+                category:"vapours",
                 density: 3.2,
                 stain: 0.005,
             },
@@ -8321,7 +8582,7 @@ elements.move_right = {
             },
             "color_smoke": {
                 color: ["#6b2e2e","#6b4f2e","#6b6b2e","#2e6b2e","#2e6b6b","#2e2e6b","#6b2e6b"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 state: "gas",
                 density: 1.977,
@@ -8329,7 +8590,7 @@ elements.move_right = {
             },
             "spray_paint": {
                 color: ["#ff0000","#ff8800","#ffff00","#00ff00","#00ffff","#0000ff","#ff00ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "special",
                 state: "liquid",
                 burn: 100,
@@ -8340,7 +8601,7 @@ elements.move_right = {
             },
             "neon": {
                 color: "#bababa",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 colorOn: ["#ff0000","#D01822","#FE5C0C"],
                 tempLow: -248.59,
                 stateLow: "liquid_neon",
@@ -8380,7 +8641,7 @@ elements.move_right = {
             },
             "stench": {
                 color: "#6ab066",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem2":"stench" },
                     "water": { "elem1":null, "elem2":"dirty_water" },
@@ -8396,7 +8657,7 @@ elements.move_right = {
             },
             "fragrance": {
                 color: "#967bb6",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "stench": { "elem2":null },
                     "oxygen": { "elem2":"fragrance" },
@@ -8422,7 +8683,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: 'Stratus cloud',
@@ -8446,7 +8707,7 @@ elements.move_right = {
 										"oil": { "elem1":null, "elem2":"oil_raincloud" },
 										"oil_raincloud": { "elem1":null, "elem2":"oil_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: "Cumulus cloud";
@@ -8468,7 +8729,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: "Raining Cumulonimbus";
@@ -8492,7 +8753,7 @@ elements.move_right = {
 										"water": { "elem1":null, "elem2":"oil_raincloud" },
 										"rain_cloud": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 state: "gas",
                 density: 0.5,
@@ -8511,7 +8772,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 state: "gas",
                 density: 0.5,
@@ -8528,7 +8789,7 @@ elements.move_right = {
                     "purifier": { "elem1":null, "elem2":"rain_cloud" },
 										"electric": { "elem1":null, "elem2":"contaminated_cumulonimbus" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "contaminated_snowcloud",
@@ -8546,7 +8807,7 @@ elements.move_right = {
 								reactions: {
                     "purifier": { "elem1":null, "elem2":"cumulonimbus" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "contaminated_snowcloud",
@@ -8561,7 +8822,7 @@ elements.move_right = {
                     "M1%5|CH:water%0.05|M1%5",
                     "CR:electric%0.05|CR:electric%0.05|CR:electric%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "snow_cloud",
@@ -8576,7 +8837,7 @@ elements.move_right = {
                     "M1%5|CH:heavy_water%0.05|M1%5",
                     "CR:electric%0.05|CR:electric%0.05|CR:electric%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "heavysnow_cloud",
@@ -8591,7 +8852,7 @@ elements.move_right = {
                     "M1%5|CH:snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "rain_cloud",
@@ -8608,7 +8869,7 @@ elements.move_right = {
                     "M1%5|CH:dirty_snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "contaminated_raincloud",
@@ -8625,7 +8886,7 @@ elements.move_right = {
                     "M1%5|CH:heavy_snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "heavyrain_cloud",
@@ -8642,7 +8903,7 @@ elements.move_right = {
                     "M1%5|CH:graupel%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -20,
                 tempHigh: 30,
                 stateHigh: "rain_cloud",
@@ -8659,7 +8920,7 @@ elements.move_right = {
                     "M1%5|CH:hail%0.05|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -200,
                 tempHigh: -180,
                 stateHigh: "snow_cloud",
@@ -8683,7 +8944,7 @@ elements.move_right = {
                     "ammonia": { "elem1":"rain_cloud", "elem2":null, "chance":0.05 },
                     "bleach": { "elem1":"rain_cloud", "elem2":null, "chance":0.05 },
                 },
-                category:"gases",
+                category:"vapours",
                 burn: 15,
                 burnTime: 5,
                 state: "gas",
@@ -8699,7 +8960,7 @@ elements.move_right = {
                 reactions: {
                     "fireball": { "elem1":null, "elem2":"fire_cloud", "chance":0.25 },
                 },
-                category:"gases",
+                category:"vapours",
                 hidden: true,
                 state: "gas",
                 density: 0.58,
@@ -8720,7 +8981,7 @@ elements.move_right = {
                 temp: 500,
                 tempLow: 100,
                 stateLow: "pyrocumulus",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 0.59,
             },
@@ -8986,7 +9247,7 @@ elements.move_right = {
             },
             "cyanide": {
                 color: "#b6ccb6",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "frog": { "elem2":"beef" },
                     "ant": { "elem2":null },
@@ -9112,7 +9373,7 @@ elements.move_right = {
                     "M1%5|CH:fallout,radiation%0.025|M1%5",
                     "CR:radiation%0.05|CR:radiation%0.05|CR:radiation%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 hidden: true,
                 state: "gas",
                 density: 0.55,
@@ -11904,10 +12165,12 @@ elements.move_right = {
             paused = !paused;
             if (paused) {
                 document.getElementById("pauseButton").setAttribute("on","true");
+								pauseStats=true;
             }
             else {
                 document.getElementById("pauseButton").setAttribute("on","false");
-            }
+								pauseStats=false;
+						}
         }
         function doFrame() {
             if (!paused) {
@@ -12366,7 +12629,7 @@ runAfterLoad(function() {
             var stats = "<span id='stat-pos' class='stat'>&nbsp;&bull;&nbsp;Cursor position: ("+mousePos.x+", "+mousePos.y+", 0)&nbsp;&bull;</span>";
             stats += "<span id='stat-pixels' class='stat'>Number of pixels:" + currentPixels.length+"&nbsp;&bull;</span>";
             stats += "<span id='stat-tps' class='stat'>" + tps+" frames per second&nbsp;&bull;</span>";
-						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.2 (E2L2S0FPR)&nbsp;&bull;</span>";
+						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.4 (E2L2S0FPR)&nbsp;&bull;</span>";
             //stats += "<span id='stat-ticks' class='stat'>" + pixelTicks+"</span>";
             if (typeof pixelMap == 'undefined') { return; }
             if (pixelMap[mousePos.x] != undefined  ) {
@@ -12730,7 +12993,7 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
         mode = null;
         view = null;
         paused = false;
-        function focusGame() { document.getElementById("game").focus(); if(showingMenu) { closeMenu(); } }
+        function focusGame() { document.getElementById("game").focus(); if(showingMenu) { closeMenu(); } focusStats = true; }
         //on window load
         window.onload = function() {
             // If the browser is Firefox, set #categoryControls padding-bottom:11px;
@@ -13485,6 +13748,9 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 }
 	</style>
 	<script>
+		var focusStats;
+		var pauseStats;
+		var allStats = "LABSIM CURRENT STATISTICS:\n";
 		function doCmd() {
 			checkLabLang();
 			var settingStuffs = clearCmd();
@@ -13551,19 +13817,64 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
         } else {
           requestFullScreen(document.body);
         }
+				focusStats = false;
 			}
 			else if (commandEntered == "{view=hide}") {
 				document.getElementById("canvasDiv").style.display="none";
+				focusStats = false;
 			}
 			else if (commandEntered == "{view=show}") {
 				document.getElementById("canvasDiv").style.display="block";
+				focusStats = false;
 			}
 			else if (commandEntered == "{view=focus}") {
 				focusGame();
 			}
+			else if (commandEntered == "{help}") {
+				window.open("https://aeonic.miraheze.org/wiki/LabLang", "_blank");
+			}
+			else if (commandEntered == "{get=focus}") {
+				if (focusStats == false) {
+					alert("Focus is set to: false");
+				}
+				else if (focusStats == true) {
+					alert("Focus is set to: true");
+				}
+				else {
+					alert("ERROR: Boolean variable 'focusStats' is not defined as being true or false at (main):1:10")
+				}
+			}
+			else if (commandEntered == "{get=version}") {
+				alert("You are playing LabSim 2.4.0.")
+			}
+			else if (commandEntered == "{get=stats}") {
+				if (focusStats == false) {
+					allStats += "FOCUS: false\n";
+				}
+				else if (focusStats == true) {
+					allStats += "FOCUS: true\n";
+				}
+				else {
+					allStats += "FOCUS: undefined\n"
+				}
+				if (pauseStats == false) {
+					allStats += "PAUSED: false\n";
+				}
+				else if (pausedStats == true) {
+					allStats += "PAUSED: true\n";
+				}
+				else {
+					allStats += "FOCUS: undefined\n"
+				}
+				alert(allStats);
+			}
+			else if (commandEntered == "{get}") {
+				alert("ERROR: Item to be gotten left undefined at (main):1:4")
+			}
 			else {
 				clearCmd();
 				alert("You did not enter a valid command");
+				focusStats = false;
 			}
 		}
 		function addNote() {
@@ -13612,13 +13923,13 @@ for (var k = 0; k < b0.split(" AND ").length; k++) {
 							
 							<button id="settingsButton" title="Brings up the settings screen" class="controlButton fa fa-gear" onclick='if (showingMenu!="settings"){closeMenu();showSettings()}else{closeMenu()};' on="false"></button><!--showModManager()--><button id="modsButton" title="Brings up the plug-ins screen" class="controlButton fa fa-puzzle-piece" onclick='showModManager();' on="false"></button>
 							
-<button id="elementsButton" title="Show the elements" class="controlButton fa" style='font-family: verdana;' oncontextmenu="return false; myFunctionXL();" onclick='myFunctionXS();' onmouseover='myFunctionXS();' on="false">elements <i class='fa fa-angle-down'></i></button>
+<button id="elementsButton" title="Show the elements" class="controlButton fa" style='font-family: futura;' oncontextmenu="return false; myFunctionXL();" onclick='myFunctionXS();' onmouseover='myFunctionXS();' on="false">elements <i class='fa fa-angle-down'></i></button>
 							
 <button id="elementsButton" title="Open LabSim in fullscreen" class="controlButton fa fa-arrows-alt"  onclick='openingFullScreen();' on="false"></button>
 							
 <button id="researchButton" title="Open Aeonic Web Site" class="controlButton fa fa-globe"  onclick='document.getElementById("researchMenu").style.display="block";' on="false"></button>
 						
-							<style>html {font-family: futura;}</style>
+							<style>html, input, button, * {font-family: futura;}</style>
 							<br/>
 							<script>
 								
@@ -13739,8 +14050,8 @@ function myFunctionXL() {
 					<br/>
             
         </div></center>
-        <div id="canvasDiv" style='display: flex;'>
-            <canvas id="game" style='width:100%' height="750" oncontextmenu="return false;">
+        <div id="canvasDiv" style='display: flex; '>
+            <canvas id="game" style='max-width:100%; max-height: 750;' oncontextmenu="return false;">
                 Your browser does not support the HTML5 canvas tag.<br>
                 Please update your browser to the latest version.<br>
                 <a href="https://www.google.com/chrome/" tabindex="-1">Chrome</a> 4.0+<br>
@@ -13794,12 +14105,12 @@ function myFunctionXL() {
 							Theme
 						</span><br/>
 						&nbsp;&bull;&nbsp;<button onclick='document.getElementById("appMain").style.background="black"; document.getElementById("appMain").style.color="white";webkitTheme.content="#000000";'><abbr >Outer Space</abbr></button>&nbsp;&bull;&nbsp;
-						<button onclick='document.getElementById("appMain").style.background="#000027"; document.getElementById("appMain").style.color="white";webkitTheme.content="#000027";'><abbr >Deep Ocean</abbr></button>&nbsp;&bull;&nbsp;
+						<button onclick='document.getElementById("appMain").style.background="#000027"; document.getElementById("appMain").style.color="white";webkitTheme.content="#000027";localStorage.setItem("theme", "ocean");'><abbr >Deep Ocean</abbr></button>&nbsp;&bull;&nbsp;
 						<button onclick='document.getElementById("appMain").style.background="#003366"; document.getElementById("appMain").style.color="white";webkitTheme.content="#003366";'><abbr>Sky High</abbr></button>&nbsp;&bull;&nbsp;
 						<button onclick='document.getElementById("appMain").style.background="linear-gradient(to bottom, #C2B280, #48BF91)"; document.getElementById("appMain").style.color="navy";localStorage.setItem("theme", "beach");webkitTheme.content="#C2B280";'><abbr>Sandy Beach</abbr></button>&nbsp;&bull;
 						<button onclick='document.getElementById("appMain").style.background="url(https://point.ebp11.repl.co/wallpaper.png)"; document.getElementById("appMain").style.color="skyblue";'><abbr>The Forest</abbr></button>&nbsp;&bull;&nbsp;<br/>
             <span class="menuTitle">Controls</span>
-						<strong>Gases</strong><br/>
+						<strong>vapours</strong><br/>
 						<p><b>Air</b><span onclick='elements.oxygen.color="#99c7ff";'>Show colour</span>&bull;<span onclick='elements.oxygen.color="#000000";'>Hide colour</span></p>
             <div class="menuText" style="padding-top:1em">
                 <span setting="units" style="display:block;padding-bottom:0.5em" class="setting-span">
@@ -13839,6 +14150,413 @@ function myFunctionXL() {
                     </select>
                     <span onclick="clearAll();" style="font-style:italic;cursor:pointer"></span>
                 </span>
+								<span class='menuTitle'>
+									Microscope Functionality (alpha)
+								</span>
+							<style>.zoomBtn{border: 1px solid white;</style></style>
+
+							<div style='overflow: horizontal;'>
+								<b>Zoom</b>&nbsp;
+								<button onclick='halfZoom();' class='zoomBtn'>1/2x</button>&nbsp;
+								<button onclick='oneZoom();' class='zoomBtn'>1x</button>&nbsp;
+								<button onclick='threeHalfZoom();' class='zoomBtn'>3/2x</button>&nbsp;
+								<button onclick='twoZoom();' class='zoomBtn'>2x</button>&nbsp;
+								<button onclick='fiveHalfZoom();' class='zoomBtn'>5/2x</button>&nbsp;
+								<button onclick='threeZoom();' class='zoomBtn'>3x</button>&nbsp;
+								<button onclick='sevenHalfZoom();' class='zoomBtn'>7/2x</button>&nbsp;
+								<button onclick='fourZoom();' class='zoomBtn'>4x</button>&nbsp;
+								<button onclick='nineHalfZoom();' class='zoomBtn'>9/2x</button>&nbsp;
+								<button onclick='fiveZoom();' class='zoomBtn'>5x</button>&nbsp;
+								<button onclick='elevenHalfZoom();' class='zoomBtn'>11/2x</button>&nbsp;
+								<button onclick='sixZoom();' class='zoomBtn'>6x</button>&nbsp;
+							</div>
+							<div style='overflow: horizontal;'>
+								<b>Coarse Focus</b>&nbsp;
+								<button onclick='coarseMinusFive();' class='zoomBtn'>-5</button>&nbsp;
+								<button onclick='coarseMinusFour();' class='zoomBtn'>-4</button>&nbsp;
+								<button onclick='coarseMinusThree();' class='zoomBtn'>-3</button>&nbsp;
+								<button onclick='coarseMinusTwo();' class='zoomBtn'>-2</button>&nbsp;
+								<button onclick='coarseMinusOne();' class='zoomBtn'>-1</button>&nbsp;
+								<button onclick='coarseZero();' class='zoomBtn'>0</button>&nbsp;
+								<button onclick='coarseOne();' class='zoomBtn'>1</button>&nbsp;
+								<button onclick='coarseTwo();' class='zoomBtn'>2</button>&nbsp;
+								<button onclick='coarseThree();' class='zoomBtn'>3</button>&nbsp;
+								<button onclick='coarseFour();' class='zoomBtn'>4</button>&nbsp;
+								<button onclick='coarseFive();' class='zoomBtn'>5</button>&nbsp;
+								<button onclick='coarseSix();' class='zoomBtn'>6</button>&nbsp;
+							</div>
+							<script>
+								function halfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 1.75;
+									        } else {
+									            pixelSize = 1.75;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 2;
+									    } else {
+									        pixelSize = 2;
+									    }
+									}
+								}
+								function oneZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 3.5;
+									        } else {
+									            pixelSize = 3.5;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 4;
+									    } else {
+									        pixelSize = 4;
+									    }
+									}
+								}
+								function threeHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 5.25;
+									        } else {
+									            pixelSize = 5.25;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 6;
+									    } else {
+									        pixelSize = 6;
+									    }
+									}
+								}
+								function twoZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 7;
+									        } else {
+									            pixelSize = 7;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 8;
+									    } else {
+									        pixelSize = 8;
+									    }
+									}
+								}
+								function fiveHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 8.75;
+									        } else {
+									            pixelSize = 5.75;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 10;
+									    } else {
+									        pixelSize = 10;
+									    }
+									}
+								}
+								function threeZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 10.5;
+									        } else {
+									            pixelSize = 10.5;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 12;
+									    } else {
+									        pixelSize = 12;
+									    }
+									}
+								}
+								function sevenHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 12.25;
+									        } else {
+									            pixelSize = 12.25;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 14;
+									    } else {
+									        pixelSize = 14;
+									    }
+									}
+								}
+								function fourZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 14;
+									        } else {
+									            pixelSize = 14;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 16;
+									    } else {
+									        pixelSize = 16;
+									    }
+									}
+								}
+								function nineHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 15.75;
+									        } else {
+									            pixelSize = 15.75;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 18;
+									    } else {
+									        pixelSize = 18;
+									    }
+									}
+								}
+								function fiveZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 17.5;
+									        } else {
+									            pixelSize = 17.5;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 20;
+									    } else {
+									        pixelSize = 20;
+									    }
+									}
+								}
+								function elevenHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 19.25;
+									        } else {
+									            pixelSize = 19.25;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 22;
+									    } else {
+									        pixelSize = 22;
+									    }
+									}
+								}
+								function sixZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 21;
+									        } else {
+									            pixelSize = 21;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 24;
+									    } else {
+									        pixelSize = 24;
+									    }
+									}
+								}
+							</script>
+							<script>
+								function coarseMinusFive () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(-50px)";
+								}
+								function coarseMinusFour () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(-40px)";
+								}
+								function coarseMinusThree () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(-30px)";
+								}
+								function coarseMinusTwo () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(-20px)";
+								}
+								function coarseMinusOne () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(-10px)";
+								}
+								function coarseZero () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(0px)";
+								}
+								function coarseOne () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(10px)";
+								}
+								function coarseTwo () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(20px)";
+								}
+								function coarseThree () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(30px)";
+								}
+								function coarseFour () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(40px)";
+								}
+								function coarseFive () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(50px)";
+								}
+								function coarseSix () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(60px)";
+								}
+								function coarseSeven () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(70px)";
+								}
+								function coarseEight () {
+									var theGame = document.getElementById("canvasDiv");
+									theGame.style.filter="blur(80px)";
+								}
+							</script>
 							<br/>
 							<button id="tpsButton" title="Modify the maximum FPS (a.k.a. 'Frames Per Second') of the sandbox." class="controlButton" onclick='var newtps = prompt("Enter the new simulation Frames Per Second (FPS). This is how many updates per second the simulation will run. The higher the TPS, the slower the LabSim Sandbox will run.\nSlow computers are reccomended between 20 and 85 FPS, while faster computers are recommended 75 to 650 FPS.\n\nThe default is 240 frames a second.\n\nThe current FPS is " + tps + ".");if (newtps !== null) {if (isNaN(newtps) || newtps == "" || newtps == "0") {alert("You did not enter a valid TPS.");}else if (newtps > 1000) {alert("You entered a FPS that is too high. The FPS will be set to the maximum, 1000.");tps = 1000;}else {tps = parseInt(newtps);if (isNaN(tps)) {alert("You did not enter a valid TPS.");tps = 240;}}resetInterval(tps);}focusGame();'>Framerate</button>
 							<button onclick='document.getElementById("extraInfo").style.display="none";document.getElementById("heibtn").display="none";document.getElementById("seibtn").display="inline-block";' id='heibtn'>Hide extra info</button>

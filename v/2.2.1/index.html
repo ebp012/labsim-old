@@ -242,12 +242,12 @@
 						    "M1|XX|M1 AND M2 AND BO",
 						    "M1|M1|M1 AND M2",
             ],
-						GAS: [
+						VAPOUR: [
                 "M2|M1|M2",
                 "M1|XX|M1",
                 "M2|M1|M2",
             ],
-            GAS_OLD: function(pixel) {
+            VAPOUR_OLD: function(pixel) {
                 if (pixel.start === pixelTicks) {return}
                 if (pixel.charge && elements[pixel.element].behaviorOn) {
                     pixelTick(pixel)
@@ -498,7 +498,7 @@
                 "M2 AND CR:radiation%2|XX|M2 AND CR:radiation%2",
                 "M1|M1|M1",
             ],
-						RADIOACTIVE_GAS: [
+						RADIOACTIVE_VAPOUR: [
 								"M2|M1 AND CR:neutron%0.01|M2",
 								"M1 AND CR:neutron%0.01|DL%0.01|M1 AND CR:neutron%0.01",
 								"M2|M1 AND CR:neutron%0.01|M2", 
@@ -599,6 +599,7 @@
                 ],
                 category: "tools",
             },
+						
             "pick": { //hard-coded
                 color: ["#fa9b9b","#fae99b","#9bfab7","#9b9dfa"],
                 behavior: [
@@ -1287,7 +1288,7 @@
             },
             "steam": {
                 color: "#abd6ff",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "steam": { "elem1": null, "elem2": "rain_cloud", "chance":0.3, "y":[0,15] },
                     "rain_cloud": { "elem1": "rain_cloud", "chance":0.4, "y":[0,15] },
@@ -1306,7 +1307,7 @@
             },
 						"radon": {
                 color: "#E1E7FC",
-                behavior: behaviors.RADIOACTIVE_GAS,
+                behavior: behaviors.RADIOACTIVE_VAPOUR,
                 reactions: {
                     "radonic_ice": { "elem1": null, "elem2": "radiation", "chance":0.7 },
 										"liquid_radon": { "elem1": null, "elem2": "radiation", "chance":0.7 },
@@ -1379,6 +1380,18 @@
                 state: "solid",
                 density: 917,
                 breakInto: "snow",
+            },
+						"eraser": { //hard-coded
+                color: "#fdb5ff",
+                behavior: [
+                    "DL|DL|DL",
+                    "DL|XX|DL",
+                    "DL|DL AND M1|DL",
+                ],
+                category: "solids",
+								stateHigh: "molten_plastic",
+								tempHigh: 148,
+								state:"solid",
             },
 						"color_ice": {
                 color: ["#ff4d4d","#ffac4d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff", "#2167ff", "#2167ff", "#2167ff"],
@@ -1662,7 +1675,7 @@
             },
 						"lavagas": {
                 color: ["#ff6f01","#ef8c00","#ff4d00"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "ice": { "elem1": "magma" },
                 },
@@ -1678,7 +1691,7 @@
             },
 						"impure_lavagas": {
                 color: ["#ff6f01","#808080","#ef8c00","#ff4d00"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "ice": { "elem1": "impure_magma" },
                 },
@@ -1696,7 +1709,7 @@
             },
             "plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1716,7 +1729,7 @@
             },
 						"graviton": {
                 color: "#4C515B",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1727,7 +1740,7 @@
             },
 						"gluon": {
                 color: "#8932b7",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1749,7 +1762,7 @@
             },
 						"quark_plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1765,7 +1778,7 @@
             },
 						"antiquark_plasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1779,9 +1792,21 @@
                 state: "gas",
                 density: 1,
             },
+						"antieraser": { //hard-coded
+                color: "#fdb5ff",
+                behavior: [
+                    "DL|DL AND M1|DL",
+                    "DL|XX|DL",
+                    "DL|DL|DL",
+                ],
+                category: "antimatter",
+								stateHigh: "antimolten_plastic",
+								tempHigh: 148,
+								state:"solid",
+            },
 						"up_quark": {
                 color: "#FFD5A9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "energy",
                 state: "gas",
 								charge: 0.333,
@@ -1789,7 +1814,7 @@
             },
 						"down_quark": {
                 color: "#FFB29C",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1907,7 +1932,7 @@
             },
 						"antiup_quark": {
                 color: "#FFD5A9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "antimatter",
                 state: "gas",
 								charge: 0.333,
@@ -1915,7 +1940,7 @@
             },
 						"antidown_quark": {
                 color: "#FFB29C",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -1979,7 +2004,7 @@
             },
 						"antiplasma": {
                 color: ["#8800ff","#b184d9","#8800ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 behavior: [
                     "M2|M1|M2",
                     "CL%5 AND M1|XX|CL%5 AND M1",
@@ -2411,7 +2436,7 @@
             },
             "plague": {
                 color: "#36005c",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "frog": { "elem2":"plague", "chance":0.05 },
                     "ant": { "elem2":"plague", "chance":0.05 },
@@ -3908,7 +3933,7 @@ elements.move_right = {
             },
             "hydrogen": {
                 color: "#558bcf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"steam" },
 										"neutron": {"elem1":null, "elem2":"deuterium" },
@@ -3943,7 +3968,7 @@ elements.move_right = {
 						"negative_hydrogen": {
                 color: "#558bcf",
 								name: 'Hydrogen anion',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"steam" },
 										"neutron": {"elem1":null, "elem2":"deuterium" },
@@ -3960,7 +3985,7 @@ elements.move_right = {
             },
 						"positive_helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
 								name: 'Helium cation',
@@ -3974,7 +3999,7 @@ elements.move_right = {
             },
 						"negative_helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
 								name: 'Helium anion',
@@ -4037,7 +4062,7 @@ elements.move_right = {
             },
             "oxygen": {
                 color: "#000000",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "copper": { "elem2":"oxidized_copper", chance:0.05 },
                     "iron": { "elem2":"rust", chance:0.025 },
@@ -4059,7 +4084,7 @@ elements.move_right = {
             "nitrogen": {
 								name: "Nitrogen",
                 color: "#b8d1d4",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem1":null, "elem2":"anesthesia" },
                     "hydrogen": { "elem1":null, "elem2":"ammonia" },
@@ -4072,7 +4097,7 @@ elements.move_right = {
             },
             "helium": {
                 color: "#a69494",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4088,7 +4113,7 @@ elements.move_right = {
 						"helium_5": {
                 color: "#a69494",
 								name: 'Helium-5',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4103,7 +4128,7 @@ elements.move_right = {
 						"negative_helium_5": {
                 color: "#a69494",
 								name: 'Helium-5 Anion',
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "quantum",
                 tempLow: -272.20,
                 stateLow: "liquid_helium",
@@ -4130,7 +4155,7 @@ elements.move_right = {
 						},
             "anesthesia": {
                 color: "#d3e1e3",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempLow: -88.48,
                 stateLow: ["nitrogen","oxygen"],
@@ -4140,7 +4165,7 @@ elements.move_right = {
             },
             "ammonia": {
                 color: "#bab6a9",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "methane": { "elem1":null, "elem2":"cyanide", "chance":0.25 },
                     "plant": { "elem1":"plant", "chance":0.05 },
@@ -4237,7 +4262,7 @@ elements.move_right = {
                 tempHigh: 10,
 								stateHigh: "ammoniadesertcloud",
 								stateLow: "liquidammonia",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -4276,13 +4301,13 @@ elements.move_right = {
                 tempHigh: 50,
 								stateHigh: "ammonia",
 								stateLow: "liquidammonia",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
             "carbon_dioxide": {
                 color: "#2f2f2f",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "plant": { "elem1":"oxygen" },
                     "algae": { "elem1":"oxygen" },
@@ -4326,7 +4351,7 @@ elements.move_right = {
             },
             "propane": {
                 color: "#bfbfbf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4386,7 +4411,7 @@ elements.move_right = {
             },
 						"butane": {
                 color: "#cfcfcf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4429,7 +4454,7 @@ elements.move_right = {
             },
             "methane": {
                 color: "#9f9f9f",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -4471,7 +4496,7 @@ elements.move_right = {
             },
 						"ethane": {
                 color: "#afafaf",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 tempHigh: 400,
                 stateHigh: "fire",
@@ -5571,7 +5596,7 @@ elements.move_right = {
                 "M2|XX|M2",
                 "M1|M1|M1",
             ],
-						GAS: [
+						VAPOUR: [
                 "M2|M1|M2",
                 "M1|XX|M1",
                 "M2|M1|M2",
@@ -5808,16 +5833,46 @@ elements.move_right = {
                 state: "solid",
                 density: 1052,
             },
+						"antiplastic": {
+                color: "#c5dede",
+                behavior: behaviors.AGPOWDER,
+                tempHigh: 250,
+                burn: 10,
+                burnTime: 200,
+                burnInto: "dioxin",
+                category: "antimatter",
+                state: "solid",
+                density: 1052,
+            },
+						"styrofoam": {
+                color: "#c5dede",
+                behavior: behaviors.POWDER,
+                tempHigh: 250,
+								stateHigh: "molten_plastic",
+                burn: 10,
+                burnTime: 200,
+                burnInto: "dioxin",
+                category: "solids",
+                state: "solid",
+                density: 1052,
+            },
             "molten_plastic": {
                 color: "#a4b3b3",
                 behavior: behaviors.LIQUID,
                 viscosity: 20,
+								category: "liquids",
+            },
+						"antimolten_plastic": {
+                color: "#a4b3b3",
+                behavior: behaviors.AGLIQUID,
+                viscosity: 20,
+								category: "antimatter",
             },
             "paper": {
                 color: "#f0f0f0",
-                behavior: behaviors.STURDYPOWDER,
+                behavior: behaviors.WALL,
                 reactions: {
-                    "water": { "elem1":"cellulose", "elem2":null },
+                    "water": { "elem1":"wet_paper", "elem2":null },
                     "dirty_water": { "elem1":"cellulose", "elem2":null },
                     "salt_water": { "elem1":"cellulose", "elem2":null },
                     "sugar_water": { "elem1":"cellulose", "elem2":null },
@@ -5837,8 +5892,91 @@ elements.move_right = {
                 category: "powders",
                 state: "solid",
                 density: 1201,
+								atoms: "cellulose"
             },
-						
+						"wet_paper": {
+                color: "#d0d0d0",
+                behavior: behaviors.STURDYPOWDER,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"wet_paper", "elem2":null },
+										"plastic": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+                burnTime: 300,
+                category: "powders",
+                state: "solid",
+                density: 1201,
+            },
+						"plaster": {
+                color: "#f2f2f2",
+                behavior: behaviors.POWDER,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"plaster_dried", "elem2":null },
+										"wet_paper": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+								name: "Plaster of Paris",
+                burnTime: 300,
+                category: "powders",
+                state: "solid",
+                density: 1201,
+            },
+						"plaster_dried": {
+                color: "#f2f2f2",
+                behavior: behaviors.SUPPORT,
+                reactions: {
+                    "water": { "elem1":"cellulose", "elem2":null },
+                    "dirty_water": { "elem1":"cellulose", "elem2":null },
+                    "salt_water": { "elem1":"cellulose", "elem2":null },
+                    "sugar_water": { "elem1":"cellulose", "elem2":null },
+                    "seltzer": { "elem1":"cellulose", "elem2":null },
+                    "soda": { "elem1":"cellulose", "elem2":null },
+                    "blood": { "elem1":"cellulose", "elem2":null },
+                    "foam": { "elem1":"cellulose", "elem2":null },
+                    "bubble": { "elem1":"cellulose", "elem2":null },
+                    "oil": { "elem1":"cellulose", "elem2":null },
+                    "alcohol": { "elem1":"cellulose", "elem2":null },
+                    "vinegar": { "elem1":"cellulose", "elem2":null },
+										"water": { "elem1":"plaster_dried", "elem2":null },
+										"wet_paper": { "elem1":"plaster", "elem2":null },
+                },
+                tempHigh: 248,
+                stateHigh: "steam",
+                burn: 70,
+								name: "Plaster of Paris",
+                burnTime: 300,
+                category: "special",
+                state: "solid",
+                density: 1201,
+            },
             "cellulose": {
                 color: "#c7d4c9",
                 behavior: behaviors.LIQUID,
@@ -5899,7 +6037,7 @@ elements.move_right = {
             },
             "dioxin": {
                 color: "#b8b8b8",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "cell": { "elem2":"cancer", "chance":0.0015 },
                     "blood": { "elem2":"infection", "chance":0.01 },
@@ -6000,7 +6138,7 @@ elements.move_right = {
             },*/
 						/*"iron_vapor": {
                 color: "#f9801d"
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "steam": { "elem1":"rust", chance:0.0025 },
                     "salt_water": { "elem1":"rust", chance:0.005 },
@@ -6176,7 +6314,7 @@ elements.move_right = {
             },
 						"gold_vapor": {
                 color: "#F0BB62",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 2970,
 								temp: 3000,
                 category: "vapours",
@@ -6274,7 +6412,7 @@ elements.move_right = {
             },
 						"bismuth_vapor": {
                 color: "#9d6c6a",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1564,
 								tempHigh: 8500,
 								temp: 1600,
@@ -6300,7 +6438,7 @@ elements.move_right = {
             },
 						"lead_vapor": {
                 color: "#ad6c6a",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1750,
 								tempHigh: 10000,
 								temp: 1800,
@@ -6354,7 +6492,7 @@ elements.move_right = {
             },
 						"tungsten_vapor": {
                 color: ['#ffff67', '#c44300'],
-								behavior: behaviors.GAS,
+								behavior: behaviors.VAPOUR,
 								tempHigh: 15000,
 								state: "gas",
 								density: 15000,
@@ -6473,7 +6611,7 @@ elements.move_right = {
             },
 						"bronze_gas": {
                 color: "#ee7f32",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 tempLow: 1273,
 								temp: 1275,
 								tempHigh: 5000,
@@ -6560,7 +6698,7 @@ elements.move_right = {
 						"steel_vapor": {
                 color: "#71797E",
 								temp: 3000,
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
 								state: "gas",
                 tempHigh: 5000,
 								tempLow: 2700,
@@ -6653,7 +6791,7 @@ elements.move_right = {
             },
 					"gallium_vapor": {
                 color: "#E0DEDE",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 /*reactions: {
                     "gold": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
                     "zinc": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
@@ -6670,7 +6808,7 @@ elements.move_right = {
                 tempHigh: 50000,
 								stateHigh: "plasma",
 								stateLow: "liquid_gallium",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 6.095,
             },
@@ -6767,7 +6905,7 @@ elements.move_right = {
             },
 						"mercury_vapor": {
                 color: ["#53574B","#65686A"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "gold": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
                     "zinc": { "elem1":null, "elem2":"amalgam", "chance":0.01 },
@@ -6785,7 +6923,7 @@ elements.move_right = {
                 tempHigh: 5000,
 								stateHigh: "plasma",
 								stateLow: "mercury",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6813,7 +6951,7 @@ elements.move_right = {
                 tempHigh: 370,
 								stateHigh: "mercury_vapor",
 								//stateLow: "mercury_snowcloud",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6841,7 +6979,7 @@ elements.move_right = {
                 tempHigh: 10,
 								stateHigh: "mercury_cloud",
 								stateLow: "mercury_graupelcloud",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -6869,7 +7007,7 @@ elements.move_right = {
                 tempLoe: -100,
 								stateHigh: "mercury_snowcloud",
 								stateLow: "solid_mercury",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 13.534,
             },
@@ -7043,7 +7181,7 @@ elements.move_right = {
                     "stench": { "elem1":null, "elem2":null },
                     "yeast": { "elem2":null, "chance":0.1 },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: -37.5,
                 tempLow: -112,
                 stateLow: "liquid_ozone",
@@ -7076,7 +7214,7 @@ elements.move_right = {
                 reactions: {
                     "oxozone": { "elem1":null, "elem2":"radiation", "chance":0.05 },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: -37.5,
                 tempLow: -112,
                 stateLow: "liquid_ozone",
@@ -7155,7 +7293,7 @@ elements.move_right = {
             },
 						"pasteurised_milk": {
                 color: "#fafafa",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
 								tempLow: 100,
 								stateLow: "milk",
 								temp: 110,
@@ -7429,6 +7567,16 @@ elements.move_right = {
                 state: "solid",
                 density: 675,
             },
+						"almond_butter": {
+                color: "#a66933",
+                behavior: behaviors.STURDYPOWDER,
+                burn: 50,
+                burnTime: 20,
+                burnInto: "ash",
+                category: "food",
+                state: "solid",
+                density: 675,
+            },
 						"skinned_almond": {
                 color: "#ffffff",
                 behavior: behaviors.POWDER,
@@ -7439,6 +7587,18 @@ elements.move_right = {
                 burnInto: "ash",
                 category: "food",
                 state: "solid",
+                density: 675,
+            },
+						"almond_milk": {
+                color: "#efefdf",
+                behavior: behaviors.LIQUID,
+                tempHigh: 400,
+                stateHigh: "ash",
+                burn: 50,
+                burnTime: 20,
+                burnInto: "ash",
+                category: "food",
+                state: "liquid",
                 density: 675,
             },
 						"food_processor": {
@@ -7744,7 +7904,7 @@ elements.move_right = {
             },
 						/*"alcohol_gas": {
                 color: "#c9c5b1",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "virus": { "elem2":null },
                     "plague": { "elem2":null },
@@ -7855,7 +8015,7 @@ elements.move_right = {
             },
             "chlorine": {
                 color: "#A5AC50",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "water": { "elem1": "acid", "elem2":null },
                     "steam": { "elem1": "acid_gas", "elem2":null },
@@ -7864,7 +8024,7 @@ elements.move_right = {
                 tempLow: -36.04,
                 stateLow: "liquid_chlorine",
                 state: "gas",
-                category:"gases",
+                category:"vapours",
                 density: 3.2,
                 stain: 0.005,
             },
@@ -8321,7 +8481,7 @@ elements.move_right = {
             },
             "color_smoke": {
                 color: ["#6b2e2e","#6b4f2e","#6b6b2e","#2e6b2e","#2e6b6b","#2e2e6b","#6b2e6b"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "vapours",
                 state: "gas",
                 density: 1.977,
@@ -8329,7 +8489,7 @@ elements.move_right = {
             },
             "spray_paint": {
                 color: ["#ff0000","#ff8800","#ffff00","#00ff00","#00ffff","#0000ff","#ff00ff"],
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 category: "special",
                 state: "liquid",
                 burn: 100,
@@ -8340,7 +8500,7 @@ elements.move_right = {
             },
             "neon": {
                 color: "#bababa",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 colorOn: ["#ff0000","#D01822","#FE5C0C"],
                 tempLow: -248.59,
                 stateLow: "liquid_neon",
@@ -8380,7 +8540,7 @@ elements.move_right = {
             },
             "stench": {
                 color: "#6ab066",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "oxygen": { "elem2":"stench" },
                     "water": { "elem1":null, "elem2":"dirty_water" },
@@ -8396,7 +8556,7 @@ elements.move_right = {
             },
             "fragrance": {
                 color: "#967bb6",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "stench": { "elem2":null },
                     "oxygen": { "elem2":"fragrance" },
@@ -8422,7 +8582,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: 'Stratus cloud',
@@ -8446,7 +8606,7 @@ elements.move_right = {
 										"oil": { "elem1":null, "elem2":"oil_raincloud" },
 										"oil_raincloud": { "elem1":null, "elem2":"oil_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: "Cumulus cloud";
@@ -8468,7 +8628,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
 								name: "Raining Cumulonimbus";
@@ -8492,7 +8652,7 @@ elements.move_right = {
 										"water": { "elem1":null, "elem2":"oil_raincloud" },
 										"rain_cloud": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 state: "gas",
                 density: 0.5,
@@ -8511,7 +8671,7 @@ elements.move_right = {
 										"carbon_dioxide": { "elem1":null, "elem2":"contaminated_raincloud" },
 										"methane": { "elem1":null, "elem2":"contaminated_raincloud" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 state: "gas",
                 density: 0.5,
@@ -8528,7 +8688,7 @@ elements.move_right = {
                     "purifier": { "elem1":null, "elem2":"rain_cloud" },
 										"electric": { "elem1":null, "elem2":"contaminated_cumulonimbus" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "contaminated_snowcloud",
@@ -8546,7 +8706,7 @@ elements.move_right = {
 								reactions: {
                     "purifier": { "elem1":null, "elem2":"cumulonimbus" },
                 },
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "contaminated_snowcloud",
@@ -8561,7 +8721,7 @@ elements.move_right = {
                     "M1%5|CH:water%0.05|M1%5",
                     "CR:electric%0.05|CR:electric%0.05|CR:electric%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "snow_cloud",
@@ -8576,7 +8736,7 @@ elements.move_right = {
                     "M1%5|CH:heavy_water%0.05|M1%5",
                     "CR:electric%0.05|CR:electric%0.05|CR:electric%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: 80,
                 tempLow: 0,
                 stateLow: "heavysnow_cloud",
@@ -8591,7 +8751,7 @@ elements.move_right = {
                     "M1%5|CH:snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "rain_cloud",
@@ -8608,7 +8768,7 @@ elements.move_right = {
                     "M1%5|CH:dirty_snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "contaminated_raincloud",
@@ -8625,7 +8785,7 @@ elements.move_right = {
                     "M1%5|CH:heavy_snow%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -10,
                 tempHigh: 30,
                 stateHigh: "heavyrain_cloud",
@@ -8642,7 +8802,7 @@ elements.move_right = {
                     "M1%5|CH:graupel%0.025|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -20,
                 tempHigh: 30,
                 stateHigh: "rain_cloud",
@@ -8659,7 +8819,7 @@ elements.move_right = {
                     "M1%5|CH:hail%0.05|M1%5",
                     "XX|XX|XX",
                 ],
-                category:"gases",
+                category:"vapours",
                 temp: -200,
                 tempHigh: -180,
                 stateHigh: "snow_cloud",
@@ -8683,7 +8843,7 @@ elements.move_right = {
                     "ammonia": { "elem1":"rain_cloud", "elem2":null, "chance":0.05 },
                     "bleach": { "elem1":"rain_cloud", "elem2":null, "chance":0.05 },
                 },
-                category:"gases",
+                category:"vapours",
                 burn: 15,
                 burnTime: 5,
                 state: "gas",
@@ -8699,7 +8859,7 @@ elements.move_right = {
                 reactions: {
                     "fireball": { "elem1":null, "elem2":"fire_cloud", "chance":0.25 },
                 },
-                category:"gases",
+                category:"vapours",
                 hidden: true,
                 state: "gas",
                 density: 0.58,
@@ -8720,7 +8880,7 @@ elements.move_right = {
                 temp: 500,
                 tempLow: 100,
                 stateLow: "pyrocumulus",
-                category:"gases",
+                category:"vapours",
                 state: "gas",
                 density: 0.59,
             },
@@ -8986,7 +9146,7 @@ elements.move_right = {
             },
             "cyanide": {
                 color: "#b6ccb6",
-                behavior: behaviors.GAS,
+                behavior: behaviors.VAPOUR,
                 reactions: {
                     "frog": { "elem2":"beef" },
                     "ant": { "elem2":null },
@@ -9112,7 +9272,7 @@ elements.move_right = {
                     "M1%5|CH:fallout,radiation%0.025|M1%5",
                     "CR:radiation%0.05|CR:radiation%0.05|CR:radiation%0.05",
                 ],
-                category:"gases",
+                category:"vapours",
                 hidden: true,
                 state: "gas",
                 density: 0.55,
@@ -12366,7 +12526,7 @@ runAfterLoad(function() {
             var stats = "<span id='stat-pos' class='stat'>&nbsp;&bull;&nbsp;Cursor position: ("+mousePos.x+", "+mousePos.y+", 0)&nbsp;&bull;</span>";
             stats += "<span id='stat-pixels' class='stat'>Number of pixels:" + currentPixels.length+"&nbsp;&bull;</span>";
             stats += "<span id='stat-tps' class='stat'>" + tps+" frames per second&nbsp;&bull;</span>";
-						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.2 (E2L2S0FPR)&nbsp;&bull;</span>";
+						stats += "<span id='stat-tps' class='stat'>LabSim Version 2.2.1 (E2L2S0PR2)&nbsp;&bull;</span>";
             //stats += "<span id='stat-ticks' class='stat'>" + pixelTicks+"</span>";
             if (typeof pixelMap == 'undefined') { return; }
             if (pixelMap[mousePos.x] != undefined  ) {
@@ -13799,7 +13959,7 @@ function myFunctionXL() {
 						<button onclick='document.getElementById("appMain").style.background="linear-gradient(to bottom, #C2B280, #48BF91)"; document.getElementById("appMain").style.color="navy";localStorage.setItem("theme", "beach");webkitTheme.content="#C2B280";'><abbr>Sandy Beach</abbr></button>&nbsp;&bull;
 						<button onclick='document.getElementById("appMain").style.background="url(https://point.ebp11.repl.co/wallpaper.png)"; document.getElementById("appMain").style.color="skyblue";'><abbr>The Forest</abbr></button>&nbsp;&bull;&nbsp;<br/>
             <span class="menuTitle">Controls</span>
-						<strong>Gases</strong><br/>
+						<strong>vapours</strong><br/>
 						<p><b>Air</b><span onclick='elements.oxygen.color="#99c7ff";'>Show colour</span>&bull;<span onclick='elements.oxygen.color="#000000";'>Hide colour</span></p>
             <div class="menuText" style="padding-top:1em">
                 <span setting="units" style="display:block;padding-bottom:0.5em" class="setting-span">

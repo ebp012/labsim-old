@@ -1,0 +1,84 @@
+<span class='menuTitle'>
+									Microscope Functionality (alpha)
+								</span>
+								<button onclick='halfZoom();'>1/2x</button><button onclick='oneZoom();'>1x</button><button>2x</button><button>3x</button>
+							<script>
+								function halfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 1.75;
+									        } else {
+									            pixelSize = 1.75;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 2;
+									    } else {
+									        pixelSize = 2;
+									    }
+									}
+								}
+								function oneZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 3.5;
+									        } else {
+									            pixelSize = 3.5;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 4;
+									    } else {
+									        pixelSize = 4;
+									    }
+									}
+								}
+								function threeHalfZoom() {
+									urlParams = new URLSearchParams(window.location.search);
+	
+									if(urlParams.get('pixelSize') != null) { //null check
+									    pixelSize = urlParams.get('pixelSize')
+									    if(isNaN(pixelSize) || pixelSize === "" || pixelSize === null) { //NaN check
+									        //Vanilla code
+									        //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									        if (window.innerWidth < 700) {
+									            pixelSize = 5.25;
+									        } else {
+									            pixelSize = 5.25;
+									        }
+									    }
+									    pixelSize = parseFloat(pixelSize)
+									    pixelSize = Math.min(194.73749999999999,Math.max(pixelSize,0.05))
+									} else {
+									    //Vanilla code
+									    //[Vanilla comment] If the screen size is under 768px, set pixelSize to 5, otherwise 6
+									    if (window.innerWidth < 700) {
+									        pixelSize = 6;
+									    } else {
+									        pixelSize = 6;
+									    }
+									}
+								}
+							</script>

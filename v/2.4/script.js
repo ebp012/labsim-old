@@ -2779,13 +2779,28 @@ elements.poisoned_ketchup_powder = {
 elements.tomato = {
     color: "#B11E0C",
     behavior: behaviors.STURDYPOWDER,
-    category: "food",
+    category: "edible",
     density: 470,
     state: "solid",
     tempHigh: 400,
     stateHigh: "ash",
     reactions: {
         "rock": { "elem1": "tomato_sauce", "elem2": "rock" },
+    },
+    burn: 40,
+    burnTime: 30,
+    burnInto: "ketchup_gas",
+};
+elements.watermelon = {
+    color: "#02D958",
+    behavior: behaviors.STURDYPOWDER,
+    category: "edible",
+    density: 470,
+    state: "solid",
+    tempHigh: 400,
+    stateHigh: "ash",
+    reactions: {
+        "rock": { "elem1": "juice", "elem2": "rock" },
     },
     burn: 40,
     burnTime: 30,
@@ -2838,7 +2853,7 @@ elements.sugary_tomato_sauce = {
 elements.cumin = {
     color: "#8B7778",
     behavior: behaviors.POWDER,
-    category: "food",
+    category: "edible",
     density: 405,
     state: "solid",
     tempHigh: 400,
@@ -3028,8 +3043,8 @@ elements.pee = {
 		"XX|XX|XX",
 		"M2%50|M1 AND SW:water%50|M2%50",
 	],
-    category: "liquids",
-		name: "Yellow Piss",
+    category: "dirty",
+		name: "Yellow Pee",
     viscosity: 1,
 		tempHigh: 100,
 		stateHigh: "fart",
@@ -3047,8 +3062,8 @@ elements.amber_pee = {
 		"XX|XX|XX",
 		"M2%50|M1 AND SW:water%50|M2%50",
 	],
-    category: "liquids",
-		name: "Amber Piss",
+    category: "dirty",
+		name: "Amber Pee",
     viscosity: 1.21,
 		tempHigh: 100,
 		stateHigh: "fart",
@@ -3066,8 +3081,8 @@ elements.red_pee = {
 		"XX|XX|XX",
 		"M2%50|M1 AND SW:water%50|M2%50",
 	],
-    category: "liquids",
-		name: "Red Piss",
+    category: "dirty",
+		name: "Red Pee",
     viscosity: 1.46,
 		tempHigh: 100,
 		stateHigh: ["fart","blood"],
@@ -3085,8 +3100,8 @@ elements.brown_pee = {
 		"XX|XX|XX",
 		"M2%50|M1 AND SW:water%50|M2%50",
 	],
-    category: "liquids",
-		name: "Brown Piss",
+    category: "dirty",
+		name: "Brown Pee",
     viscosity: 2.37,
 		tempHigh: 100,
 		stateHigh: ["fart","blood", "dirt"],
@@ -3097,10 +3112,48 @@ elements.brown_pee = {
     state: "liquid",
     density: 57
 };
+elements.kidney_stone = {
+    color: "#70543e",
+	behavior: [
+		"XX|CR:stench%0.1|XX",
+		"XX|XX|XX",
+		"M2%50|M1 AND SW:water%50|M2%50",
+	],
+    category: "dirty",
+		name: "Kidney Stone",
+    viscosity: 2.37,
+		tempHigh: 100,
+		stateHigh: ["fart","blood", "dirt", "salt", "water", "water", "blood"],
+		tempLow: 0,
+		stateLow: ["pee_ice","blood", "frozen_dirt"],
+    reactions: {},
+		breakInto: ["bile", "bile", "bile", "bile", "bile", "blood", "blood"],
+    state: "solid",
+    density: 57
+};
+elements.gallstone = {
+    color: "#253D33",
+	behavior: [
+		"XX|CR:stench%0.1|XX",
+		"XX|XX|XX",
+		"M2%50|M1 AND SW:water%50|M2%50",
+	],
+    category: "dirty",
+		name: "Gallstone",
+    viscosity: 2.37,
+		tempHigh: 100,
+		stateHigh: ["pee","blood", "dirt", "salt", "water", "bile", "blood", "rot"],
+		tempLow: 0,
+		stateLow: "pee_ice",
+    reactions: {},
+		breakInto: ["bile", "bile", "bile", "bile", "bile", "blood", "blood", "rot"],
+    state: "solid",
+    density: 57
+};
 elements.pee_ice = {
     color: "#cecfa0",
 	behavior: behaviors.STINKYSOLID,
-    category: "solids",
+    category: "dirty",
     viscosity: 1,
 		stateHigh: "pee",
 		tempHigh: 0,
@@ -3113,7 +3166,7 @@ elements.pee_ice = {
 elements.pee_snow = {
     color: "#e1e114",
 	behavior: behaviors.STINKYPOWDER,
-    category: "powders",
+    category: "dirty",
     viscosity: 1,
 		stateHigh: "pee",
 		tempHigh: 0,
@@ -3462,7 +3515,7 @@ elements.chicken_egg = {
 };
 elements.boiled_egg = {
     color: "#d4cbc3",
-    category: "food",
+    category: "edible",
 	state: "solid",
     behavior: [
         "XX|XX|XX",
@@ -4039,7 +4092,7 @@ elements.time = {
 elements.wet_soup = {
     color: "#C15C3F",
     behavior: behaviors.LIQUID,
-    category: "food",
+    category: "edible",
     viscosity: 6400,
     state: "liquid",
     density: 320
@@ -4047,7 +4100,7 @@ elements.wet_soup = {
 elements.guacamole = {
     color: "#67A555",
     behavior: behaviors.LIQUID,
-    category: "food",
+    category: "edible",
     viscosity: 4640,
     state: "liquid",
     density: 993
@@ -4055,7 +4108,7 @@ elements.guacamole = {
 elements.cream = {
     color: ["#E1D3A2","#E5DBB7"],
     behavior: behaviors.LIQUID,
-    category: "food",
+    category: "edible",
     stateHigh: "gas",
     viscosity: 4640,
     state: "liquid",
@@ -4091,7 +4144,7 @@ elements.pee_cloud = {
 		temp: 20,
 		tempLow: -10,
 		stateLow: "pee_snowcloud",
-		category: "vapours",
+		category: "dirty",
 		state: "gas",
 	},
 	elements.pee_snowcloud = {
@@ -4105,7 +4158,21 @@ elements.pee_cloud = {
 		temp: -20,
 		stateHigh: -10,
 		stateHigh: "pee_cloud",
-		category: "vapours",
+		category: "dirty",
+		state: "gas",
+	},
+	elements.pee_sleet_cloud = {
+		color: "#f1e114",
+		behavior: [
+			"XX|XX|XX",
+			"M1%7|CH:pee_ice%0.05|M1%7",
+			"XX|XX|XX",
+		],
+		density: 0.7,
+		temp: -20,
+		stateHigh: -10,
+		stateHigh: "pee_cloud",
+		category: "dirty",
 		state: "gas",
 	},
 /*elements.pee_graupelcloud = {
@@ -4133,13 +4200,13 @@ elements.pee_cloud = {
 		temp: 20,
 		tempLow: -10,
 		stateHigh: "rotten_meat",
-		category: "special",
+		category: "dirty",
 		state: "solid",
 	},
 elements.fart = {
     color: "#e1e114",
 		behavior: behaviors.DVAPOUR,
-    category: "vapours",
+    category: "dirty",
     viscosity: 1,
 		tempLow: 15,
 		temp: 25,
@@ -4156,7 +4223,7 @@ elements.burp = {
       "M1|DL%5 AND CH:methane%15 AND CH:ethane%2|M1",
       "M2|M1|M2",
 		],
-    category: "vapours",
+    category: "dirty",
     viscosity: 1,
 		tempLow: 15,
 		temp: 25,
@@ -4169,7 +4236,57 @@ elements.burp = {
 elements.dried_poop = {
     color: "#442714",
     behavior: behaviors.POWDER,
-    category: "powders",
+    category: "dirty",
+		hidden: true,
+		tempHigh: 60,
+		stateHigh: "diarrhea",
+    viscosity: 1,
+    state: "solid",
+    density: 43
+};
+elements.amber_poop = {
+    color: "#8D6863",
+    behavior: behaviors.POWDER,
+    category: "dirty",
+		tempHigh: 60,
+		stateHigh: "diarrhea",
+    viscosity: 1,
+    state: "solid",
+    density: 43
+};
+elements.dried_amber_poop = {
+    color: "#4A2C14",
+    behavior: behaviors.POWDER,
+    category: "dirty",
+		hidden: true,
+		tempHigh: 60,
+		stateHigh: "diarrhea",
+    viscosity: 1,
+    state: "solid",
+    density: 43
+};
+elements.plagued_poop = {
+    color: "#8F1600",
+    behavior: [
+			"XX|CR:plague%0.03|XX",
+      "M2|XX|M2",
+      "M1|M1|M1",
+		],
+    category: "dirty",
+		tempHigh: 40,
+		stateHigh: "dried_plagued_poop",
+    viscosity: 1,
+    state: "solid",
+    density: 43
+};
+elements.dried_plagued_poop = {
+    color: "#3D172F",
+    behavior: [
+			"XX|CR:plague%0.03|XX",
+      "M2|XX|M2",
+      "M1|M1|M1",
+		],
+    category: "dirty",
 		hidden: true,
 		tempHigh: 60,
 		stateHigh: "diarrhea",
@@ -4183,6 +4300,15 @@ elements.dried_poop = {
     category: "powders",
 		hidden: true,
     viscosity: 1,
+    state: "solid",
+    density: 43
+};*/
+/*elements.pisspoop = {
+    color: "#8D6863",
+	behavior: behaviors.STURDYPOWDER,
+    category: "dirty",
+		name: "Pisspoop";
+    reactions: {},
     state: "solid",
     density: 43
 };*/
